@@ -4,18 +4,19 @@ import type { App } from '../data/apps';
 import Icon from './Icon.astro';
 interface Props { app: App; }
 const { app } = Astro.props;
-const osShort = (os: string) => (os === 'Windows' ? 'WIN' : 'MAC');
+const osShort = (os: string) => (os === 'Windows' ? 'WIN' : os === 'macOS' ? 'MAC' : 'PAN');
 ---
 <div>
   <div class="download-grid">
     {app.downloads.map((d) => (
-      <a class="download-card" href={d.url} download rel="noopener">
+      <a class="download-card" href={d.url} {...(d.external ? { target: '_blank' } : { download: true })} rel="noopener">
         <span class="dl-icon">{osShort(d.os)}</span>
         <span class="dl-body">
           <span class="dl-label">{d.label}</span>
           <span class="dl-note">{d.note}</span>
+          {d.code && <span class="dl-code" data-code={d.code} title="点击复制提取码">提取码 <b>{d.code}</b> <span class="dl-copy">复制</span></span>}
         </span>
-        <span class="dl-arrow"><Icon name="download" /></span>
+        <span class="dl-arrow"><Icon name={d.external ? 'external' : 'download'} /></span>
       </a>
     ))}
   </div>

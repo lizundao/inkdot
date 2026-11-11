@@ -401,6 +401,11 @@ button { font-family: inherit; cursor: pointer; }
 .dl-body { min-width: 0; display: flex; flex-direction: column; }
 .dl-label { display: block; font-size: 15px; font-weight: 700; color: var(--ink-900); }
 .dl-note { display: block; font-size: 12.5px; color: var(--ink-400); margin-top: 3px; }
+.dl-code { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; margin-top: 8px; padding: 3px 9px; border: 1px dashed var(--seal); border-radius: 7px; background: var(--seal-soft); font-size: 12px; color: var(--ink-500); cursor: pointer; user-select: none; transition: background .2s; }
+.dl-code:hover { background: var(--seal); color: var(--paper-1); }
+.dl-code:hover b, .dl-code:hover .dl-copy { color: var(--paper-1); }
+.dl-code b { font-family: var(--font-brand); font-size: 13px; letter-spacing: 1px; color: var(--seal); }
+.dl-copy { font-size: 11px; color: var(--ink-400); border-left: 1px solid currentColor; padding-left: 6px; }
 .dl-arrow { margin-left: auto; color: var(--seal); flex: none; }
 .dl-arrow svg { width: 20px; height: 20px; }
 .dl-hint { font-size: 13px; color: var(--ink-400); margin-top: 18px; display: flex; gap: 8px; align-items: flex-start; line-height: 1.6; }
