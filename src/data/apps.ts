@@ -71,7 +71,8 @@ export const apps: App[] = [
     downloads: [
       { label: "Windows 便携版", os: "Windows", note: "解压即用 · 约 5 MB", url: PDF_RELEASE + "PDF-Toolbox-1.0.0-portable-win-x64.zip" },
       { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 约 4 MB", url: PDF_RELEASE + "PDF-Toolbox-1.0.0-setup-win-x64.exe" },
-      { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · 约 5.5 MB", url: PDF_RELEASE + "PDF-Toolbox-1.0.0-aarch64.dmg" },
+      { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · 约 5.2 MB", url: PDF_RELEASE + "PDF-Toolbox-1.0.0-aarch64.dmg" },
+      { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: PDF_RELEASE + "PDF-Toolbox-1.0.0-aarch64.app.zip" },
     ],
     features: [
       { k: "完全离线", v: "文件在本地处理，不上传云端（Office 转 PDF 会调用本机 Office）" },
@@ -149,6 +150,7 @@ export const apps: App[] = [
       { label: "Windows 便携版", os: "Windows", note: "解压即用 · 约 4 MB", url: IMG_RELEASE + "ImageProcessor-1.0.0-portable-win-x64.zip" },
       { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 约 3.3 MB", url: IMG_RELEASE + "ImageProcessor-1.0.0-setup-win-x64.exe" },
       { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · 约 3.8 MB", url: IMG_RELEASE + "ImageProcessor-1.0.0-aarch64.dmg" },
+      { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: IMG_RELEASE + "ImageProcessor-1.0.0-aarch64.app.zip" },
     ],
     features: [
       { k: "完全离线", v: "图片全程本地处理，不上传、不追踪、无需账号" },
