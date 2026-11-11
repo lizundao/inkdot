@@ -11,7 +11,7 @@
 export type KV = { k: string; v: string };
 export type Download = { label: string; os: "Windows" | "macOS"; note: string; url: string };
 export type Faq = { q: string; a: string };
-export type GuideStep = { n: number; title: string; body: string; tip?: string };
+export type GuideStep = { n: number; title: string; body: string; tip?: string; shot?: string; shotAlt?: string };
 
 export type App = {
   id: string;
@@ -114,8 +114,8 @@ export const apps: App[] = [
       lead: "从下载到处理好第一份文件，通常只要几分钟。下面按界面实际布局，带你走一遍通用流程。",
       steps: [
         { n: 1, title: "安装与启动", body: "下载便携版 zip 并解压到任意目录，双击 pdf-compress.exe 即可启动；macOS 打开 dmg 把应用拖入「应用程序」。便携版不写注册表，删除文件夹即卸载。", tip: "路径尽量用英文或中文，避免特殊符号；不要解压到需要管理员权限的系统目录。" },
-        { n: 2, title: "认识界面", body: "窗口左侧是功能导航（压缩、页面工具、格式转换、水印版式、安全隐私、脱敏涂黑等），右侧是当前功能的设置与文件列表。首页是全部工具的入口宫格。", tip: "左侧栏顶部可切换深色 / 浅色主题。" },
-        { n: 3, title: "进入功能并添加文件", body: "在左侧点选需要的功能，然后点「选择文件」或直接把 PDF 拖进窗口。支持一次添加多个文件批量处理。" },
+        { n: 2, title: "认识界面", body: "窗口左侧是功能导航（首页、压缩、扫描增强、页面工具、格式转换、水印版式、安全隐私、预览信息），右侧是当前功能的设置与文件列表。首页是全部工具的入口宫格。", tip: "左侧栏顶部可切换深色 / 浅色主题。", shot: "/assets/img/guide/pdf-nav.png", shotAlt: "左侧功能导航：首页、压缩、扫描增强、页面工具、格式转换等，顶部月亮图标可切换主题" },
+        { n: 3, title: "进入功能并添加文件", body: "在左侧点选需要的功能，然后点「选择文件」或直接把 PDF 拖进窗口。支持一次添加多个文件批量处理。", shot: "/assets/img/guide/pdf-tools.png", shotAlt: "首页「选择工具」宫格：压缩、页面工具、扫描增强、格式转换、水印版式、预览信息、安全隐私，点击卡片即可进入" },
         { n: 4, title: "确认输出并设置参数", body: "输出路径通常已自动填好（与源文件同目录）；按需要调整参数，例如压缩强度、页码范围、水印文字与字体。" },
         { n: 5, title: "开始处理并取回文件", body: "点击「开始处理」，完成后会弹出提示，可「打开文件位置」或「复制路径」。输出文件不会覆盖原件。", tip: "中文水印记得选微软雅黑、宋体等中文字体，避免显示成方块。" },
       ],
@@ -188,10 +188,10 @@ export const apps: App[] = [
       lead: "图片处理器采用「左功能、中参数、右列表」的三栏布局。先指定输出目录，再添加图片、选功能、调参数，最后批量处理。",
       steps: [
         { n: 1, title: "安装与启动", body: "下载便携版 zip 并解压，双击 image-processor.exe 启动；macOS 打开 dmg 将应用拖入「应用程序」。Tauri 2 已将运行资源内嵌，单个 exe 即可运行，无需额外资源文件夹。", tip: "建议解压到普通用户目录，避免需要管理员权限的位置。" },
-        { n: 2, title: "先设置输出目录", body: "首次使用，点顶部「设置 → 输出设置」，选择或输入图片保存路径（如 D:\\Pictures\\Output），保存。之后所有处理成果都会输出到这个目录。" },
-        { n: 3, title: "添加图片", body: "把图片直接拖到窗口右侧的图片列表，或点「选择图片文件」导入。支持一次添加多张，可在列表里拖拽排序。" },
-        { n: 4, title: "选择功能并调参数", body: "在左侧选功能（默认「图片压缩」），中间会显示对应参数。例如压缩时拖动质量滑块，一般设在 70–85 之间，兼顾体积与清晰度。" },
-        { n: 5, title: "开始处理并取回结果", body: "确认右侧图片列表无误后，点「开始处理」。完成后到输出目录取回图片；个别失败项会汇总提示，已成功的文件不受影响。" },
+        { n: 2, title: "先设置输出目录", body: "首次使用，点顶部「设置 → 输出设置」，选择或输入图片保存路径（如 D:\\Pictures\\Output），保存。之后所有处理成果都会输出到这个目录。", shot: "/assets/img/guide/img-menubar.png", shotAlt: "顶部菜单栏「文件 / 设置 / 帮助」，从「设置 → 输出设置」指定图片保存目录" },
+        { n: 3, title: "添加图片", body: "把图片直接拖到窗口右侧的图片列表，或点「选择图片文件」导入。支持一次添加多张，可在列表里拖拽排序。", shot: "/assets/img/guide/img-dropzone.png", shotAlt: "右侧「图片列表」的虚线拖放区与「选择图片文件」按钮，右上角可添加或清空列表" },
+        { n: 4, title: "选择功能并调参数", body: "在左侧选功能（默认「图片压缩」），中间会显示对应参数。例如压缩时拖动质量滑块，一般设在 70–85 之间，兼顾体积与清晰度。", shot: "/assets/img/guide/img-quality.png", shotAlt: "中间参数设置区，以「压缩设置」为例：拖动质量滑块，数值 70–85 兼顾体积与清晰度" },
+        { n: 5, title: "开始处理并取回结果", body: "确认右侧图片列表无误后，点「开始处理」。完成后到输出目录取回图片；个别失败项会汇总提示，已成功的文件不受影响。", shot: "/assets/img/guide/img-start.png", shotAlt: "右下角处理按钮：添加图片后由灰色「请先添加图片」变为可点击的「开始处理」" },
       ],
       naming: "输出文件名支持变量：{name} 原文件名（如 photo）、{timestamp} 时间戳（如 20261111133022）、{index} 序号（如 001）。可自由组合，例如 {name}_{index}。",
       notes: [

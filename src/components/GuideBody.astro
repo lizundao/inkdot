@@ -44,6 +44,12 @@ const g = app.guide;
                 <span>{s.tip}</span>
               </div>
             )}
+            {s.shot && (
+              <figure class="step-shot">
+                <img src={s.shot} alt={s.shotAlt} loading="lazy" />
+                <figcaption>{s.shotAlt}</figcaption>
+              </figure>
+            )}
           </div>
         </div>
       ))}

@@ -516,6 +516,11 @@ button { font-family: inherit; cursor: pointer; }
 }
 .step-tip svg { width: 16px; height: 16px; flex: none; margin-top: 2px; color: var(--jade); }
 
+/* 步骤内配图（真实界面局部截图） */
+.step-shot { margin: 14px 0 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--paper-3); }
+.step-shot img { width: 100%; display: block; }
+.step-shot figcaption { font-size: 12.5px; color: var(--ink-400); padding: 8px 12px; background: var(--paper-2); border-top: 1px solid var(--line); line-height: 1.6; }
+
 /* 输出命名 */
 .naming-box {
   display: flex; gap: 15px; align-items: flex-start;
