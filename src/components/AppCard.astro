@@ -1,0 +1,36 @@
+---
+/** 工具卡片（首页「全部工具」网格）。status=soon 渲染为不可点的预告卡。 */
+import type { App } from '../data/apps';
+import Icon from './Icon.astro';
+interface Props { app: App; }
+const { app } = Astro.props;
+const isLive = app.status === 'live';
+---
+<article class:list={['app-card', { soon: !isLive }]}>
+  <div class="app-card-top">
+    {isLive ? (
+      <span class="app-card-icon"><img src={app.icon} alt="" loading="lazy" /></span>
+    ) : (
+      <span class="app-card-icon"><span class="soon-glyph">待</span></span>
+    )}
+    <div>
+      <h3 class="app-card-name">{app.name}</h3>
+      <div class="app-card-ver">{isLive ? `v${app.version} · ${app.updated}` : '即将上线'}</div>
+    </div>
+  </div>
+  <p class="app-card-sum">{app.summary}</p>
+  <div class="app-card-tags">
+    {app.tags.slice(0, 4).map((t) => <span class="tag">{t}</span>)}
+    {app.tags.length > 4 && <span class="tag">+{app.tags.length - 4}</span>}
+  </div>
+  <div class="app-card-foot">
+    {isLive ? (
+      <>
+        <a class="app-card-link" href={app.url}>查看详情 <Icon name="arrow" /></a>
+        <span class="version">{app.platforms.join(' · ')}</span>
+      </>
+    ) : (
+      <span class="soon-pill">正在打磨中</span>
+    )}
+  </div>
+</article>

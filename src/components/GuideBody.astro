@@ -1,0 +1,70 @@
+---
+/** 图文教程主体：真实截图 + 分步骤卡片 + 输出命名 + 注意事项。
+ *  两个工具共用此组件，步骤内容来自数据层，改教程只改 apps.ts。 */
+import type { App } from '../data/apps';
+import Icon from './Icon.astro';
+interface Props { app: App; }
+const { app } = Astro.props;
+const g = app.guide;
+---
+<div class="content-grid">
+  <aside class="side-nav">
+    <h3 class="side-nav-title">本页目录</h3>
+    <ul>
+      <li><a href="#screenshot">界面一览</a></li>
+      <li><a href="#steps">操作步骤</a></li>
+      <li><a href="#naming">输出命名</a></li>
+      <li><a href="#notes">注意事项</a></li>
+    </ul>
+    <a class="btn btn-primary btn-sm btn-block" href={app.url} style="margin-top:20px;">
+      <Icon name="download" /> 去下载
+    </a>
+  </aside>
+
+  <div class="prose">
+    <p class="guide-lead">{g.lead}</p>
+
+    <h2 id="screenshot">界面一览</h2>
+    <figure class="shot-frame">
+      <img src={g.screenshot} alt={g.screenshotAlt} loading="lazy" />
+      <figcaption>{g.screenshotAlt}</figcaption>
+    </figure>
+
+    <h2 id="steps">操作步骤</h2>
+    <div class="steps">
+      {g.steps.map((s) => (
+        <div class="step-card">
+          <div class="step-num">{s.n}</div>
+          <div class="step-content">
+            <h3 class="step-title">{s.title}</h3>
+            <p class="step-body">{s.body}</p>
+            {s.tip && (
+              <div class="step-tip">
+                <Icon name="info" />
+                <span>{s.tip}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <h2 id="naming">输出命名</h2>
+    <div class="naming-box">
+      <span class="naming-mark">名</span>
+      <p>{g.naming}</p>
+    </div>
+
+    <h2 id="notes">注意事项</h2>
+    <ul class="note-list">
+      {g.notes.map((n) => (
+        <li><Icon name="check" /><span>{n}</span></li>
+      ))}
+    </ul>
+
+    <div class="notice">
+      <Icon name="info" />
+      <span>仍未解决？可查看 <a href={app.url + '#faq'} style="color:var(--seal); font-weight:600; text-decoration:underline;">常见问题</a>，或 <a href="mailto:277059707@qq.com" style="color:var(--seal); font-weight:600; text-decoration:underline;">发邮件反馈</a>。</span>
+    </div>
+  </div>
+</div>

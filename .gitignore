@@ -8,6 +8,7 @@ old/
 
 # 浏览器测试 / 本地工具缓存
 .playwright-cli/
+.preview-shots/
 *.log
 
 # 系统文件

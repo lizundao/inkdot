@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+---
+<BaseLayout title="页面走丢了" description="这个页面不存在或已移动。">
+  <section class="section" style="text-align:center;">
+    <div class="container" style="max-width:560px;">
+      <div class="seal-stamp" style="margin:0 auto 22px; width:64px; height:64px; font-size:20px;">墨</div>
+      <h1 class="section-title" style="font-size:clamp(40px,8vw,64px);">404</h1>
+      <p class="section-sub" style="margin-inline:auto;">这一页走丢了，可能是链接旧了，或者我把它挪走了。</p>
+      <div class="hero-actions" style="justify-content:center;">
+        <a class="btn btn-primary" href="/">回到首页 <Icon name="arrow" /></a>
+        <a class="btn btn-ghost" href="/#apps">看看工具</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

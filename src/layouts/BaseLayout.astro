@@ -1,0 +1,105 @@
+---
+/** 全站唯一骨架：页头、页脚、SEO、主题、全站交互集中于此。
+ *  改页头/页脚 → 改 SiteHeader / SiteFooter 组件即可，所有页面同步。 */
+import { site } from '../data/site';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  active?: 'home' | 'pdf' | 'image' | 'privacy' | 'disclaimer';
+  ogImage?: string;
+}
+const {
+  title,
+  description = site.description,
+  active,
+  ogImage = '/assets/img/pdf-toolbox-cover.png',
+} = Astro.props;
+
+const fullTitle = `${title} · ${site.name} ${site.en}`;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImageUrl = new URL(ogImage, site.url).href;
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="theme-color" content="#b5453a" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- 霞鹜文楷分片字体（按 unicode-range 按需加载，通常仅几十 KB） -->
+    <link rel="stylesheet" href="/assets/fonts/lxgw/font.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <!-- 主题脚本必须在首屏绘制前同步执行，避免深浅色闪烁（FOUC） -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('inkdot-theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <SiteHeader active={active} />
+    <main>
+      <slot />
+    </main>
+    <SiteFooter />
+
+    <!-- 全站交互：主题切换、FAQ 折叠、教程侧栏滚动高亮 -->
+    <script>
+      // 主题切换
+      document.getElementById('theme-toggle')?.addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('inkdot-theme', next); } catch (e) {}
+      });
+
+      // FAQ 折叠
+      document.querySelectorAll('.faq-q').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var item = btn.closest('.faq-item');
+          var open = item && item.classList.toggle('open');
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      });
+
+      // 教程页侧栏：滚动高亮当前小节
+      var links = Array.prototype.slice.call(document.querySelectorAll('.side-nav a[href^="#"]'));
+      var targets = links
+        .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+        .filter(Boolean);
+      if (targets.length && 'IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            links.forEach(function (a) {
+              a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
+            });
+          });
+        }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+        targets.forEach(function (t) { obs.observe(t); });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+---
+/** 精选工具大卡（首页头部聚焦）。 */
+import type { App } from '../data/apps';
+import Icon from './Icon.astro';
+interface Props { app: App; }
+const { app } = Astro.props;
+---
+<article class="featured">
+  <a class="featured-media" href={app.url} aria-label={`查看 ${app.name} 详情`}>
+    <img src={app.cover} alt={`${app.name} 界面预览`} loading="lazy" />
+    <span class="featured-badge">精选工具</span>
+  </a>
+  <div class="featured-body">
+    <div class="featured-head">
+      <span class="featured-icon"><img src={app.icon} alt="" loading="lazy" /></span>
+      <div>
+        <h3 class="featured-name">{app.name}</h3>
+        <p class="featured-tagline">{app.tagline}</p>
+      </div>
+    </div>
+    <p class="featured-desc">{app.description}</p>
+    <div class="tag-row">
+      {app.tags.map((t) => <span class="tag">{t}</span>)}
+    </div>
+    <div class="featured-foot">
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn btn-primary" href={app.url}>查看教程与下载 <Icon name="arrow" /></a>
+        <a class="btn btn-ghost" href={app.guideUrl}>图文教程</a>
+      </div>
+      <span class="version">v{app.version}</span>
+    </div>
+  </div>
+</article>

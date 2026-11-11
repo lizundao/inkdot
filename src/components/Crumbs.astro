@@ -1,0 +1,15 @@
+---
+/** 面包屑导航。 */
+interface Crumb { label: string; href?: string; }
+interface Props { items: Crumb[]; }
+const { items } = Astro.props;
+---
+<nav class="crumbs" aria-label="面包屑">
+  <a href="/">首页</a>
+  {items.map((c) => (
+    <>
+      <span class="sep">/</span>
+      {c.href ? <a href={c.href}>{c.label}</a> : <span>{c.label}</span>}
+    </>
+  ))}
+</nav>

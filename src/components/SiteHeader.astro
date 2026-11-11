@@ -1,0 +1,31 @@
+---
+/** 全站页头。改这里 → 所有页面导航同步更新。 */
+import { site } from '../data/site';
+import Icon from './Icon.astro';
+
+interface Props { active?: 'home' | 'pdf' | 'image' | 'privacy' | 'disclaimer'; }
+const { active } = Astro.props;
+
+const links = [
+  { key: 'home', href: '/', label: '首页' },
+  { key: 'pdf', href: '/apps/pdf-toolbox/', label: 'PDF 工具箱' },
+  { key: 'image', href: '/apps/image-processor/', label: '图片处理器' },
+];
+---
+<header class="site-header">
+  <div class="container nav">
+    <a href="/" class="brand" aria-label={`${site.name}${site.en} 首页`}>
+      <span class="brand-mark"><img src="/assets/img/inkdot.png" alt="" width="38" height="38" /></span>
+      <span class="brand-name">{site.name}<span style="color:var(--seal)">.</span></span>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      {links.map((l) => (
+        <a href={l.href} class:list={['nav-link', { active: active === l.key }]}>{l.label}</a>
+      ))}
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="切换深浅主题" title="切换深浅主题">
+        <Icon name="moon" class="icon-moon" />
+        <Icon name="sun" class="icon-sun" />
+      </button>
+    </nav>
+  </div>
+</header>

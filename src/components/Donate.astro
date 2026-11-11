@@ -1,0 +1,28 @@
+---
+/** 打赏区块：详情页与教程页底部显示。
+ *  收款码就绪后，把图片放到 public/assets/img/donate-qr.png，
+ *  并在 src/data/site.ts 把 donate.qrReady 改为 true 即可全站生效。 */
+import { donate } from '../data/site';
+import Icon from './Icon.astro';
+---
+{donate.enabled && (
+  <aside class="donate-box" aria-label="支持作者">
+    <div class="donate-mark">
+      <span class="donate-seal">赏</span>
+    </div>
+    <div class="donate-copy">
+      <h3 class="donate-title">{donate.title}</h3>
+      <p class="donate-note">{donate.note}</p>
+      {donate.qrReady ? (
+        <div class="donate-qr">
+          <img src={donate.qrImage} alt="打赏收款码" loading="lazy" />
+          <span>微信 / 支付宝 扫码</span>
+        </div>
+      ) : (
+        <a class="donate-link" href={donate.linkUrl} target="_blank" rel="noopener">
+          {donate.linkText} <Icon name="arrow" class="donate-link-arrow" />
+        </a>
+      )}
+    </div>
+  </aside>
+)}

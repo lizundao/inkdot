@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Crumbs from '../../../components/Crumbs.astro';
+import Icon from '../../../components/Icon.astro';
+import DownloadGrid from '../../../components/DownloadGrid.astro';
+import Faq from '../../../components/Faq.astro';
+import Donate from '../../../components/Donate.astro';
+import { getApp } from '../../../data/apps';
+
+const app = getApp('image-processor')!;
+---
+<BaseLayout title={app.name} description={app.description} active="image" ogImage={app.cover}>
+  <section class="detail-head">
+    <div class="container">
+      <div style="margin-bottom:26px;">
+        <Crumbs items={[{ label: '全部工具', href: '/#apps' }, { label: app.name }]} />
+      </div>
+      <div class="detail-hero">
+        <div>
+          <span class="detail-icon"><img src={app.icon} alt="" width="84" height="84" /></span>
+          <h1 class="detail-title">{app.name}</h1>
+          <p class="detail-tagline">{app.tagline}</p>
+          <div class="detail-meta">
+            <span>v{app.version}</span>
+            <span>更新于 {app.updated}</span>
+            <span>{app.platforms.join(' · ')}</span>
+            <span>依据 MIT 许可开放</span>
+          </div>
+          <p class="detail-desc">{app.description}</p>
+          <div class="detail-actions">
+            <a class="btn btn-primary" href="#download"><Icon name="download" /> 立即下载</a>
+            <a class="btn btn-ghost" href={app.guideUrl}>图文教程 <Icon name="arrow" /></a>
+            <a class="btn btn-ghost" href={app.repo} target="_blank" rel="noopener">源码仓库 <Icon name="external" /></a>
+          </div>
+        </div>
+        <a class="detail-cover" href={app.guideUrl} aria-label="查看图文教程">
+          <img src={app.cover} alt={`${app.name} 界面预览`} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="download-band" id="download">
+    <div class="container section-sm">
+      <div class="section-head">
+        <span class="eyebrow">DOWNLOAD · 下载</span>
+        <h2 class="section-title" style="font-size:30px;">选择适合你的版本</h2>
+      </div>
+      <DownloadGrid app={app} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid">
+      <aside class="side-nav">
+        <h3 class="side-nav-title">本页目录</h3>
+        <ul>
+          <li><a href="#features">核心特点</a></li>
+          <li><a href="#modules">功能一览</a></li>
+          <li><a href="#requirements">系统要求</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ul>
+      </aside>
+      <div class="prose">
+        <h2 id="features">核心特点</h2>
+        <table class="data-table">
+          <tbody>
+            {app.features.map((f) => <tr><th>{f.k}</th><td>{f.v}</td></tr>)}
+          </tbody>
+        </table>
+
+        <h2 id="modules">功能一览</h2>
+        <table class="data-table">
+          <tbody>
+            {app.modules.map((m) => <tr><th>{m.k}</th><td>{m.v}</td></tr>)}
+          </tbody>
+        </table>
+        <div class="notice">
+          <Icon name="info" />
+          <span>第一次使用？建议先看 <a href={app.guideUrl} style="color:var(--seal); font-weight:600; text-decoration:underline;">图文教程</a>，从设置输出目录到批量处理，几分钟就能走通。</span>
+        </div>
+
+        <h2 id="requirements">系统要求</h2>
+        <table class="data-table">
+          <tbody>
+            {app.requirements.map((r) => <tr><th>{r.k}</th><td>{r.v}</td></tr>)}
+          </tbody>
+        </table>
+
+        <h2 id="faq">常见问题</h2>
+        <div class="prose-card" style="padding:8px 22px;">
+          <Faq items={app.faq} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container" style="max-width:760px;">
+      <Donate />
+    </div>
+  </section>
+</BaseLayout>

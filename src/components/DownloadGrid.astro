@@ -1,0 +1,26 @@
+---
+/** 下载卡片区（详情页）。下载链接集中来自数据层，改一处全站同步。 */
+import type { App } from '../data/apps';
+import Icon from './Icon.astro';
+interface Props { app: App; }
+const { app } = Astro.props;
+const osShort = (os: string) => (os === 'Windows' ? 'WIN' : 'MAC');
+---
+<div>
+  <div class="download-grid">
+    {app.downloads.map((d) => (
+      <a class="download-card" href={d.url} download rel="noopener">
+        <span class="dl-icon">{osShort(d.os)}</span>
+        <span class="dl-body">
+          <span class="dl-label">{d.label}</span>
+          <span class="dl-note">{d.note}</span>
+        </span>
+        <span class="dl-arrow"><Icon name="download" /></span>
+      </a>
+    ))}
+  </div>
+  <p class="dl-hint">
+    <Icon name="info" />
+    <span>未签名软件首次运行可能被系统提示拦截（Windows SmartScreen / macOS Gatekeeper），属正常现象，详见页面下方「常见问题」与仓库文档。已开源，源码可自行审查。</span>
+  </p>
+</div>

@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import PromiseList from '../components/PromiseList.astro';
+import FeaturedCard from '../components/FeaturedCard.astro';
+import AppCard from '../components/AppCard.astro';
+import { site } from '../data/site';
+import { liveApps, apps } from '../data/apps';
+
+const featured = liveApps.filter((a) => a.featured);
+---
+<BaseLayout title={site.slogan} active="home" ogImage="/assets/img/pdf-toolbox-cover.png">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h1 class="hero-title">墨点<span class="dot">.</span></h1>
+        <p class="hero-slogan">{site.slogan}</p>
+        <p class="hero-desc">
+          {site.description} 不联网、不注册、不上传，
+          <br />把该做的事，在你自己的电脑上做完。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#apps">看看有哪些工具 <Icon name="arrow" /></a>
+          <a class="btn btn-ghost" href="#about">了解墨点</a>
+        </div>
+        <p class="hero-note">开源 · 本地处理 · 当前版本自由使用</p>
+      </div>
+      <PromiseList />
+    </div>
+  </section>
+
+  <!-- 精选工具 -->
+  {featured.length > 0 && (
+    <section class="section featured-wrap" id="featured">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">FEATURED · 精选</span>
+          <h2 class="section-title">两款趁手的小工具</h2>
+          <p class="section-sub">都离线运行，各解决一类高频问题。点进去有图文教程，几分钟就能上手。</p>
+        </div>
+        <div style="display:grid; gap:22px;">
+          {featured.map((app) => <FeaturedCard app={app} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 全部工具 -->
+  <section class="section" id="apps">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">TOOLBOX · 全部工具</span>
+        <h2 class="section-title">一点就够用</h2>
+        <p class="section-sub">持续打磨中，更多小工具陆续上架。</p>
+      </div>
+      <div class="app-grid">
+        {apps.map((app) => <AppCard app={app} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- 关于 -->
+  <section class="section featured-wrap" id="about">
+    <div class="container about">
+      <span class="about-mark"><img src="/assets/img/inkdot.png" alt="" loading="lazy" /></span>
+      <span class="eyebrow" style="justify-content:center;">ABOUT · 关于墨点</span>
+      <h2 class="section-title about-title">做点<span class="accent">小而确定</span>的工具</h2>
+      <p class="about-text">
+        墨点是我个人业余维护的小站，分享一些我自己写、自己用的桌面工具。
+        我更相信「把一件事做扎实」，而不是堆砌功能。所以这里的每一款工具，
+        都尽量做到离线可用、开箱即用、不打扰你。
+      </p>
+      <div class="about-actions">
+        <a class="btn btn-ghost" href={site.authorUrl} target="_blank" rel="noopener">
+          关于作者 <Icon name="external" />
+        </a>
+      </div>
+      <div class="ink-divider" style="margin-top:44px;">
+        <span class="ink-dot"></span>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

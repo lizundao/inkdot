@@ -1,0 +1,16 @@
+---
+/** 首页「放心用，不折腾」承诺列表。 */
+import { promises } from '../data/site';
+---
+<div class="promise-card">
+  <h3 class="promise-title">放心用，不折腾</h3>
+  <p class="promise-sub">做小工具，也守住几条底线</p>
+  <ul class="promise-list">
+    {promises.map((p) => (
+      <li>
+        <span class="promise-tag">{p.tag}</span>
+        <span class="promise-text">{p.text}</span>
+      </li>
+    ))}
+  </ul>
+</div>
