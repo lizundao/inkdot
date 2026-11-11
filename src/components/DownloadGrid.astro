@@ -14,7 +14,7 @@ const osShort = (os: string) => (os === 'Windows' ? 'WIN' : os === 'macOS' ? 'MA
         <span class="dl-body">
           <span class="dl-label">{d.label}</span>
           <span class="dl-note">{d.note}</span>
-          {d.code && <span class="dl-code" data-code={d.code} title="点击复制提取码">提取码 <b>{d.code}</b> <span class="dl-copy">复制</span></span>}
+          {d.code && <span class="dl-code" data-code={d.code} title="链接已自动填入提取码；若未生效可点此复制备用">提取码 <b>{d.code}</b> <span class="dl-copy">已填 · 复制</span></span>}
         </span>
         <span class="dl-arrow"><Icon name={d.external ? 'external' : 'download'} /></span>
       </a>
