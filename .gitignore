@@ -1,0 +1,16 @@
+# Astro 依赖与构建产物
+node_modules/
+dist/
+.astro/
+
+# 旧站参考资源（已从服务器下载并打包删除，若复现勿提交）
+old/
+
+# 浏览器测试 / 本地工具缓存
+.playwright-cli/
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini

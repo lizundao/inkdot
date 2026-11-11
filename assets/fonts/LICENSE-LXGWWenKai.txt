@@ -1,0 +1,4 @@
+LXGW WenKai (霞鹜文楷)
+Copyright (c) 2021 LXGW (https://github.com/lxgw)
+SIL Open Font License 1.1
+https://github.com/lxgw/LxgwWenKai
