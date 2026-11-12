@@ -53,6 +53,7 @@ const FIN_RELEASE = "https://github.com/lizundao/finance-toolbox/releases/downlo
 const BAT_RELEASE = "https://github.com/lizundao/batch-rename/releases/download/v0.1.0/";
 const CM_RELEASE = "https://github.com/lizundao/clear-meta/releases/download/v0.1.0/";
 const SEAL_RELEASE = "https://github.com/lizundao/seal-extractor/releases/download/v1.1.0/";
+const TIXINGMAO_RELEASE = "https://github.com/lizundao/tixingmao/releases/download/v1.0.0/";
 
 export const apps: App[] = [
   {
@@ -544,6 +545,92 @@ export const apps: App[] = [
         "扫描件建议 200 DPI 以上；过低分辨率下细笔画印章可能漏检。",
         "透明底模式只保留红色笔画，合同本身的红色文字 / 表格线可能一起保留，建议用白底或原图裁切模式核对。",
         "单次最多 60 个文件 / 200 页，单个 PDF 120 页、150 MB；单图单边不超过 12000 px，超大页面会自动降低渲染清晰度。",
+      ],
+    },
+  },
+
+  {
+    id: "tixingmao",
+    name: "提醒猫",
+    tagline: "托盘 · 定时 · 工作日 · 悬浮猫咪",
+    summary: "安静待在托盘，到点让一只会动的小猫来提醒你，还能自动跳过节假日。",
+    description:
+      "离线桌面提醒工具，平时驻留系统托盘，到点从屏幕指定位置弹出一只会动的小猫和提醒文字。支持一次性、每天、间隔三种提醒，可自动跳过周末与国家法定节假日并正确处理调休，所有数据保存在本机。",
+    version: "1.0.0",
+    updated: "2026-11-12",
+    icon: "/assets/img/tixingmao-icon.png",
+    cover: "/assets/img/tixingmao-cover.png",
+    tags: ["提醒", "托盘", "番茄钟", "法定节假日", "桌面宠物", "定时"],
+    featured: true,
+    status: "live",
+    url: "/apps/tixingmao/",
+    guideUrl: "/apps/tixingmao/guide/",
+    platforms: ["Windows", "macOS"],
+    repo: "https://github.com/lizundao/tixingmao",
+    downloads: [
+      { label: "Windows 便携版", os: "Windows", note: "解压即用 · 单文件 exe", url: TIXINGMAO_RELEASE + "Tixingmao-1.0.0-portable-win-x64.zip" },
+      { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 当前用户目录", url: TIXINGMAO_RELEASE + "Tixingmao-1.0.0-setup-win-x64.exe" },
+      { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · aarch64", url: TIXINGMAO_RELEASE + "Tixingmao-1.0.0-aarch64.dmg" },
+      { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: TIXINGMAO_RELEASE + "Tixingmao-1.0.0-aarch64.app.zip" },
+      { label: "百度网盘（备用）", os: "网盘", note: "免输码直达 · 永久有效", url: "https://pan.baidu.com/s/1n4vqkHtzzEwqc3SaIOVHpg?pwd=ljia", code: "ljia", external: true },
+    ],
+    features: [
+      { k: "完全本地", v: "提醒与设置都保存在本机应用数据目录，无账号、无云同步、不联网" },
+      { k: "自由使用", v: "依据 MIT 许可开放源码，当前版本自由使用，无广告" },
+      { k: "安静驻留", v: "平时待在托盘，关闭主窗口不退出，不打扰你正在做的事" },
+      { k: "会动的小猫", v: "到点弹出透明置顶悬浮层，猫咪会眨眼、摆尾、呼吸、拍爪，悬停即暂停" },
+      { k: "法定工作日", v: "自动跳过周末与国家法定节假日，并正确处理官方调休上班日" },
+      { k: "位置可选", v: "猫咪出现位置九宫格任选，左上到右下九个位置即时生效" },
+      { k: "自己补假期", v: "新一年放假安排公布后，可在设置里手动标记或批量导入休息日与调休日" },
+      { k: "绿色便携", v: "便携版解压即用，不写注册表，删文件夹即卸载" },
+    ],
+    modules: [
+      { k: "一次性提醒", v: "指定日期时间，到点提醒一次；可设为完成后自动删除" },
+      { k: "每天提醒", v: "每天固定时间，适合喝水、起身、日报等固定节奏" },
+      { k: "间隔提醒", v: "每隔 N 分钟 / 小时 / 天循环提醒，可做简易番茄钟" },
+      { k: "工作日模式", v: "仅法定工作日触发，遇到节假日与周末自动顺延" },
+      { k: "悬浮提醒", v: "透明置顶、不抢键盘焦点、悬停暂停、点击关闭，多条依次排队" },
+      { k: "假期维护", v: "单日标记休息 / 调休上班，或按行批量导入放假与调休日期" },
+      { k: "托盘与排序", v: "托盘菜单快捷操作，提醒卡片拖拽排序，顺序本地保存" },
+    ],
+    requirements: [
+      { k: "操作系统", v: "Windows 10 / 11（64 位）；macOS Apple 芯片（aarch64）" },
+      { k: "运行时", v: "Windows 需 WebView2 运行时（Win10/11 通常已预装，内置离线引导器）" },
+      { k: "内存", v: "建议 4 GB 及以上" },
+      { k: "磁盘空间", v: "约 15 MB" },
+      { k: "节假日数据", v: "内置 2024–2027 年中国法定节假日（含 2027 年最新安排）；更晚年份可在设置里手动补充" },
+      { k: "首次运行", v: "软件未购买代码签名，可能被 SmartScreen / Gatekeeper 拦截，属正常现象" },
+    ],
+    faq: [
+      { q: "双击 exe 没反应？", a: "检查是否被杀毒软件拦截；确认是 64 位 Windows 且已安装 WebView2 运行时；也可换用 NSIS 安装版。" },
+      { q: "SmartScreen 提示「未知发布者」或 macOS 提示「已损坏」？", a: "软件尚未购买代码签名，属正常现象。Windows 点「更多信息」→「仍要运行」；macOS 可在终端执行 xattr -dr com.apple.quarantine /Applications/Tixingmao.app 后重新打开。" },
+      { q: "便携版如何卸载？", a: "直接删除解压文件夹即可，不会在系统中残留注册表项；提醒数据另存在应用数据目录，卸载前可自行备份。" },
+      { q: "关掉窗口是不是就不提醒了？", a: "不是。关闭主窗口只是把它收进托盘，后台仍按计划提醒。要完全退出，请右键托盘图标选「退出提醒猫」。" },
+      { q: "到点没看到猫咪？", a: "猫咪是透明置顶悬浮层，默认出现在屏幕右下角。可在「系统设置 → 猫咪出现位置」改成更醒目的位置；也可点「预览猫咪」先看效果。" },
+      { q: "悬浮层会抢走我正在打字的焦点吗？", a: "不会。悬浮层不抢键盘焦点，鼠标移入会暂停猫咪动画并显示关闭按钮，移开继续。" },
+      { q: "节假日提醒准吗？2028 年呢？", a: "内置 2024–2027 年中国法定节假日与调休数据（含 2027 年国务院最新安排），会跳过周末与法定节假日并识别调休上班日。2028 年及以后可在「系统设置 → 法定节假日与调休」手动标记或批量导入，不必等软件更新。" },
+      { q: "数据会上传吗？需要注册账号吗？", a: "不会、也不需要。所有提醒、位置与假期设置都保存在本机应用数据目录，无账号、无云同步、无网络请求。" },
+      { q: "是否收费？", a: "采用 MIT 开源许可，当前版本依据许可自由使用，无广告。" },
+    ],
+    guide: {
+      screenshot: "/assets/img/tixingmao-guide.png",
+      screenshotAlt: "提醒猫主界面：左侧是「我的提醒」列表与今天的日期徽章，右侧是「新建提醒」表单",
+      lead: "提醒猫是「设一次、它自己记着」的工具：左边看提醒、右边建提醒，到点猫咪从屏幕角落弹出来。下面按真实界面走一遍，设好你的第一条提醒。",
+      steps: [
+        { n: 1, title: "下载与启动", body: "下载 Windows 便携版 zip 并解压到任意目录，双击「提醒猫.exe」启动；也可运行 NSIS 安装版。macOS 打开 dmg 把应用拖入「应用程序」，首次被 Gatekeeper 拦截的处理方式见详情页常见问题。", tip: "便携版不写注册表，删除文件夹即卸载；启动后主窗口右上角会显示今天是工作日还是节假日。" },
+        { n: 2, title: "认识界面", body: "窗口分两栏：左侧「我的提醒」列出已设的提醒，顶部有今天的日期徽章；右侧「新建提醒」是表单。页头右上角有「预览猫咪」「系统设置」「新建提醒」三个按钮。", shot: "/assets/img/guide/tm-main.png", shotAlt: "提醒猫主窗口：左侧我的提醒列表与今天「工作日」徽章，右侧新建提醒表单，页头有预览猫咪与系统设置按钮" },
+        { n: 3, title: "新建一条提醒", body: "在右侧填「提醒名称」（必填），可选填「猫咪说的话」。提醒方式三选一：仅一次（指定日期时间）、每天（固定几点）、间隔提醒（每 N 分钟/小时/天）。需要跳过周末与法定节假日就保持勾选「只在法定工作日提醒」。", tip: "想做喝水、起身这类节奏提醒，选「每天」或「间隔提醒」最省事。", shot: "/assets/img/guide/tm-form.png", shotAlt: "新建提醒表单：提醒名称、猫咪说的话、提醒方式（仅一次/每天/间隔提醒）、每天几点与「只在法定工作日提醒」勾选项" },
+        { n: 4, title: "选择猫咪出现位置", body: "点页头「系统设置」，在「猫咪出现位置」九宫格里选一个方位（左上、上中、右上、左中、居中、右中、左下、下中、右下），选择后立即生效，之后所有提醒都会从这里出现。", tip: "工作区右下角常被遮挡的话，可改成右上角或居中，更醒目。", shot: "/assets/img/guide/tm-position.png", shotAlt: "系统设置弹窗里的「猫咪出现位置」九宫格，九个方位可选，当前选中项高亮" },
+        { n: 5, title: "预览并等猫咪来提醒", body: "点「预览猫咪」先看效果：一只米白色小猫从左下角探出，旁边深色卡片写着提醒标题与内容。到点后真实提醒同样弹出，鼠标移入会暂停动画并显示关闭按钮，移开继续，多条提醒会依次排队。", tip: "悬浮层透明置顶、不抢键盘焦点，可以放心继续手头的事；看完点右上角 × 关闭。", shot: "/assets/img/guide/tm-overlay.png", shotAlt: "桌面右下角弹出的猫咪悬浮提醒：米白色小猫插画配深色提醒卡片，卡片标题为「该喝水啦」" },
+        { n: 6, title: "托盘与后台运行", body: "关闭主窗口不会退出，提醒猫继续在托盘运行；右键托盘图标可「打开提醒列表」「新建提醒」「测试悬浮提醒」或「退出提醒猫」，左键单击图标打开列表。提醒卡片可按住左侧圆点拖动排序，顺序自动保存。", shot: "/assets/img/guide/tm-tray.png", shotAlt: "托盘右键菜单：打开提醒列表、新建提醒、测试悬浮提醒、退出提醒猫" },
+      ],
+      namingTitle: "提醒与数据",
+      naming: "提醒猫不生成输出文件：所有提醒、显示位置与自定义节假日都保存在系统应用数据目录（Windows 在 %APPDATA%\\com.tixingmao.desktop，macOS 在 ~/Library/Application Support/com.tixingmao.desktop），以 JSON 文件保存，不上传网络。数据文件若损坏会自动改名备份为 .json.broken 并重新建立，不会让程序崩溃。",
+      notes: [
+        "内置节假日数据覆盖 2024–2027 年（含 2027 年国务院最新放假安排）；2028 年及以后请在「系统设置 → 法定节假日与调休」手动标记或批量导入，不必等软件更新。",
+        "所有时间按北京时间（UTC+8）计算；一次性提醒若选在法定节假日且开启了工作日模式，会自动顺延到下一个工作日。",
+        "关闭主窗口只是收进托盘，仍在后台提醒；要完全退出请右键托盘图标选「退出提醒猫」。",
+        "便携版解压即用、不写注册表；提醒数据单独存在应用数据目录，搬运时记得单独备份。",
       ],
     },
   },

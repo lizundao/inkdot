@@ -3,7 +3,7 @@
 import { site } from '../data/site';
 import Icon from './Icon.astro';
 
-interface Props { active?: 'home' | 'pdf' | 'image' | 'finance' | 'batch' | 'meta' | 'seal' | 'privacy' | 'disclaimer'; }
+interface Props { active?: 'home' | 'pdf' | 'image' | 'finance' | 'batch' | 'meta' | 'seal' | 'tixingmao' | 'privacy' | 'disclaimer'; }
 const { active } = Astro.props;
 
 const links = [
@@ -14,6 +14,7 @@ const links = [
   { key: 'batch', href: '/apps/batch-rename/', label: '批量重命名' },
   { key: 'meta', href: '/apps/clear-meta/', label: '元数据管理' },
   { key: 'seal', href: '/apps/seal-extractor/', label: '印章提取' },
+  { key: 'tixingmao', href: '/apps/tixingmao/', label: '提醒猫' },
 ];
 ---
 <header class="site-header">
