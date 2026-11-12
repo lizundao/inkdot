@@ -13,7 +13,7 @@ const g = app.guide;
     <ul>
       <li><a href="#screenshot">界面一览</a></li>
       <li><a href="#steps">操作步骤</a></li>
-      <li><a href="#naming">输出命名</a></li>
+      <li><a href="#naming">{g.namingTitle || '输出命名'}</a></li>
       <li><a href="#notes">注意事项</a></li>
     </ul>
     <a class="btn btn-primary btn-sm btn-block" href={app.url} style="margin-top:20px;">
@@ -55,7 +55,7 @@ const g = app.guide;
       ))}
     </div>
 
-    <h2 id="naming">输出命名</h2>
+    <h2 id="naming">{g.namingTitle || '输出命名'}</h2>
     <div class="naming-box">
       <span class="naming-mark">名</span>
       <p>{g.naming}</p>

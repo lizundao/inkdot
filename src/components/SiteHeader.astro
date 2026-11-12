@@ -3,13 +3,14 @@
 import { site } from '../data/site';
 import Icon from './Icon.astro';
 
-interface Props { active?: 'home' | 'pdf' | 'image' | 'privacy' | 'disclaimer'; }
+interface Props { active?: 'home' | 'pdf' | 'image' | 'finance' | 'privacy' | 'disclaimer'; }
 const { active } = Astro.props;
 
 const links = [
   { key: 'home', href: '/', label: '首页' },
   { key: 'pdf', href: '/apps/pdf-toolbox/', label: 'PDF 工具箱' },
   { key: 'image', href: '/apps/image-processor/', label: '图片处理器' },
+  { key: 'finance', href: '/apps/finance-toolbox/', label: '财务工具箱' },
 ];
 ---
 <header class="site-header">

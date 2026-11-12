@@ -88,3 +88,67 @@ crop_shot(IMG, os.path.join(GUIDE_DIR, "img-menubar.png"), (0, 0, 360, 120), 2)
 crop_shot(IMG, os.path.join(GUIDE_DIR, "img-dropzone.png"), (675, 33, 1200, 310), 1.4)
 crop_shot(IMG, os.path.join(GUIDE_DIR, "img-quality.png"), (200, 33, 668, 250), 1.6)
 crop_shot(IMG, os.path.join(GUIDE_DIR, "img-start.png"), (900, 710, 1200, 800), 2)
+
+
+# ---- 财务工具箱（真实界面截图 1100×760）----
+FIN = r"E:\rustc\tools\finance\ScreenShot_2026-06-12_140916_309.png"
+
+
+def legend_annotated(src, dst, boxes, badges, pad=48, legend_h=96):
+    """截图四周留白，底部放编号图例，避免标注遮挡界面内容。"""
+    img = Image.open(src).convert("RGB")
+    W, H = img.size
+    canvas = Image.new("RGB", (W + pad * 2, H + pad * 2 + legend_h), WHITE)
+    canvas.paste(img, (pad, pad))
+    ov = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
+    od = ImageDraw.Draw(ov)
+    for box in boxes:
+        b = (box[0] + pad, box[1] + pad, box[2] + pad, box[3] + pad)
+        od.rounded_rectangle(b, radius=12, fill=SEAL + (18,), outline=SEAL + (230,), width=3)
+    canvas = Image.alpha_composite(canvas.convert("RGBA"), ov).convert("RGB")
+    d = ImageDraw.Draw(canvas)
+    d.line([(pad, H + pad + 18), (W + pad, H + pad + 18)], fill=(232, 224, 220), width=2)
+    x, y = pad, H + pad + 34
+    for num, text in badges:
+        badge(d, x, y, num, text)
+        x += int(d.textlength(text, font=f(23, True))) + 58 + 34
+    canvas.save(dst, optimize=True)
+    print("OK", os.path.basename(dst), canvas.size)
+
+
+def make_finance_icon(dst, S=512):
+    """计算器网格图标，配色与站内既有图标一致。"""
+    BG = (200, 114, 112)
+    im = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle([0, 0, S - 1, S - 1], radius=112, fill=BG)
+    d.rounded_rectangle([104, 96, 408, 416], radius=30, outline=WHITE, width=14)
+    d.rounded_rectangle([132, 124, 380, 214], radius=14, fill=WHITE)
+    ft = f(76, True)
+    t = "¥"
+    bb = d.textbbox((0, 0), t, font=ft)
+    d.text((256 - (bb[2] - bb[0]) / 2 - bb[0], 169 - (bb[3] - bb[1]) / 2 - bb[1]),
+           t, font=ft, fill=BG)
+    for r in range(3):
+        for c in range(3):
+            x, y = 140 + c * 84, 244 + r * 52
+            d.rounded_rectangle([x, y, x + 56, y + 34], radius=12, fill=WHITE)
+    im.save(dst, optimize=True)
+    print("OK", os.path.basename(dst), im.size)
+
+
+make_finance_icon(os.path.join(IMG_DIR, "finance-toolbox-icon.png"))
+Image.open(FIN).convert("RGB").save(
+    os.path.join(IMG_DIR, "finance-toolbox-cover.png"), optimize=True)
+print("OK finance-toolbox-cover.png")
+
+legend_annotated(
+    FIN, os.path.join(IMG_DIR, "finance-toolbox-guide.png"),
+    [(0, 100, 195, 655), (240, 140, 1060, 655), (0, 655, 195, 760)],
+    [(1, "功能导航"), (2, "工具宫格"), (3, "语言与主题")],
+)
+
+crop_shot(FIN, os.path.join(GUIDE_DIR, "fin-nav.png"), (0, 100, 195, 655), 1.8)
+crop_shot(FIN, os.path.join(GUIDE_DIR, "fin-tools.png"), (240, 140, 1060, 420), 1.2)
+crop_shot(FIN, os.path.join(GUIDE_DIR, "fin-lang.png"), (0, 640, 195, 760), 2.6)
+crop_shot(FIN, os.path.join(GUIDE_DIR, "fin-topbar.png"), (0, 0, 260, 46), 3)

@@ -41,6 +41,7 @@ export type App = {
     screenshotAlt: string;
     lead: string;
     steps: GuideStep[];
+    namingTitle?: string;  // 可选：默认「输出命名」，无文件输出的工具可改写
     naming: string;
     notes: string[];
   };
@@ -48,6 +49,7 @@ export type App = {
 
 const PDF_RELEASE = "https://github.com/lizundao/pdf-toolbox/releases/download/v1.0.0/";
 const IMG_RELEASE = "https://github.com/lizundao/image-processor/releases/download/v1.0.0/";
+const FIN_RELEASE = "https://github.com/lizundao/finance-toolbox/releases/download/v0.1.0/";
 
 export const apps: App[] = [
   {
@@ -201,6 +203,87 @@ export const apps: App[] = [
       notes: [
         "一键美化为自动参数调整，效果因图而异，可配合亮度 / 对比度手动微调。",
         "处理超大图片或很长的 GIF 时会占用较多内存，建议分批进行。",
+      ],
+    },
+  },
+
+  {
+    id: "finance-toolbox",
+    name: "财务工具箱",
+    tagline: "大写 · 日期 · 税费 · 信贷 · 个税",
+    summary: "人民币大写、日期利息、价税分离、贷款折旧与工资个税，输入即得结果。",
+    description:
+      "离线桌面财务小工具，集成人民币大写、票据日期、价税分离、日期与节假日计算、贷款试算、折旧分摊和工资个税。所有计算在本机完成，不上传数据。",
+    version: "0.1.0",
+    updated: "2026-11-12",
+    icon: "/assets/img/finance-toolbox-icon.png",
+    cover: "/assets/img/finance-toolbox-cover.png",
+    tags: ["财务", "人民币大写", "日期计算", "价税分离", "工资个税", "节假日"],
+    featured: true,
+    status: "live",
+    url: "/apps/finance-toolbox/",
+    guideUrl: "/apps/finance-toolbox/guide/",
+    platforms: ["Windows", "macOS"],
+    repo: "https://github.com/lizundao/finance-toolbox",
+    downloads: [
+      { label: "Windows 便携版", os: "Windows", note: "解压即用 · 约 2.7 MB", url: FIN_RELEASE + "FinanceToolbox-0.1.0-portable-win-x64.zip" },
+      { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 约 2 MB", url: FIN_RELEASE + "FinanceToolbox-0.1.0-setup-win-x64.exe" },
+      { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · 约 2.8 MB", url: FIN_RELEASE + "FinanceToolbox-0.1.0-aarch64.dmg" },
+      { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: FIN_RELEASE + "FinanceToolbox-0.1.0-aarch64.app.zip" },
+      { label: "百度网盘（备用）", os: "网盘", note: "免输码直达 · 永久有效", url: "https://pan.baidu.com/s/1uBDE2bYh-eDjnFofdbYHig?pwd=70qd", code: "70qd", external: true },
+    ],
+    features: [
+      { k: "完全离线", v: "所有计算在本机完成，不上传数据、无账号、无云端接口" },
+      { k: "自由使用", v: "依据 MIT 许可开放源码，当前版本自由使用，无广告" },
+      { k: "绿色便携", v: "便携版解压即用，不写注册表，删文件夹即卸载" },
+      { k: "金额可靠", v: "十进制定点舍入与金额范围校验，避免二进制浮点误差" },
+      { k: "票据规范", v: "人民币大写按票据习惯补齐「零圆 / 零角 / 零分」" },
+      { k: "结果即用", v: "输入即得结果，支持一键复制，不生成或改写文件" },
+      { k: "中英双语", v: "界面中 / 英切换，浅色 / 深色主题，设置记在本机" },
+    ],
+    modules: [
+      { k: "金额与大写", v: "人民币大写、大写反查、金额格式化" },
+      { k: "票据日期", v: "支票日期大写（年 / 月 / 日按票据规则转换）" },
+      { k: "税费计算", v: "价税分离、利息计算" },
+      { k: "日期与日历", v: "日期差与账期、公历农历、法定节假日与调休" },
+      { k: "信贷与资产", v: "等额本息 / 等额本金还款计划、直线折旧、比例分摊" },
+      { k: "薪酬与校验", v: "工资个税（累计预扣法）、证件号码校验" },
+    ],
+    requirements: [
+      { k: "操作系统", v: "Windows 10 / 11（64 位）；macOS Apple 芯片（aarch64）" },
+      { k: "内存", v: "建议 4 GB 及以上" },
+      { k: "磁盘空间", v: "约 20 MB" },
+      { k: "运行时", v: "Windows 需 WebView2 运行时（Win10/11 通常已预装）" },
+      { k: "节假日数据", v: "本地收录 2001–2027 年；更晚年份按周一至周五估算并明确提示" },
+      { k: "首次运行", v: "软件未购买代码签名，可能被 SmartScreen / Gatekeeper 拦截，属正常现象" },
+    ],
+    faq: [
+      { q: "双击 exe 没反应？", a: "检查是否被杀毒软件拦截；尝试右键 → 以管理员身份运行；确认是 64 位 Windows 且已安装 WebView2 运行时。" },
+      { q: "SmartScreen 提示「未知发布者」或 macOS 提示「已损坏」？", a: "软件尚未购买代码签名，属正常现象。Windows 点「更多信息」→「仍要运行」；macOS 可在终端执行 xattr -dr com.apple.quarantine /Applications/Finance\\ Toolbox.app 后重新打开。" },
+      { q: "便携版如何卸载？", a: "直接删除解压文件夹即可，不会在系统中残留注册表项。" },
+      { q: "1.005 为什么舍入成 1.01？", a: "金额统一按十进制定点四舍五入处理，避免二进制浮点误差导致的 1.00。超过约 90 万亿元的金额会提示超出可计算范围，不会给出结果。" },
+      { q: "0.01 的大写为什么是「零圆零壹分」？", a: "这是票据大写的零位补全规则：不足一元补「零圆」，零角有分补「零」。用于支票、凭证等正式场景更规范。" },
+      { q: "2028 年的日期计算准确吗？", a: "本地节假日数据收录到 2027 年。选择 2028 年及以后，界面会提示「未收录年份」，工作日按周一至周五估算，仅供参考；正式放假安排发布后需更新数据文件。" },
+      { q: "工资个税结果和工资条不一样？", a: "工具按累计预扣法估算，需填累计收入、累计免税收入与各项扣除。实际应纳税额以单位申报与税务机关口径为准。" },
+      { q: "是否收费？会不会上传我的数据？", a: "当前版本依据 MIT 许可自由使用。所有计算在本机完成，无账号、无云上传，设置只存在本机。" },
+    ],
+    guide: {
+      screenshot: "/assets/img/finance-toolbox-guide.png",
+      screenshotAlt: "财务工具箱主界面，左侧为功能导航，右侧为「选择工具」宫格，左下可切换语言与主题",
+      lead: "财务工具箱是「输入即得结果」的小工具：左边选功能、中间填数据，结果直接显示并可一键复制。下面按真实界面走一遍通用流程。",
+      steps: [
+        { n: 1, title: "下载与启动", body: "下载 Windows 便携版 zip 并解压到任意目录，双击 finance-toolbox.exe 启动；也可运行 NSIS 安装版。macOS 打开 dmg 把应用拖入「应用程序」，首次被 Gatekeeper 拦截的处理方式见详情页常见问题。", tip: "便携版不写注册表，删除文件夹即卸载；解压路径尽量避开需要管理员权限的系统目录。" },
+        { n: 2, title: "认识界面", body: "顶部菜单是「工具 / 帮助 / 文件」，左侧是功能导航（人民币大写、价税分离、日期计算、贷款试算、工资个税等），右侧「选择工具」宫格是同样的入口，卡片下方的「可用」表示功能已就绪。", tip: "左侧栏可滚动，底部是语言切换；右上月亮图标切换深浅主题。", shot: "/assets/img/guide/fin-nav.png", shotAlt: "左侧功能导航：首页、人民币大写、大写反查、支票日期大写、金额格式化、价税分离、日期计算、日历、利息计算、贷款试算等" },
+        { n: 3, title: "选择要用的功能", body: "在右侧宫格点任意卡片，例如「人民币大写」，或点左侧同名导航，界面立即切换到该功能页。十几个工具都是同一套操作：填参数、看结果、复制。", shot: "/assets/img/guide/fin-tools.png", shotAlt: "「选择工具」宫格：人民币大写、大写反查、支票日期大写、金额格式化、价税分离、日期计算、利息计算等卡片" },
+        { n: 4, title: "填写数据并取回结果", body: "按提示输入金额、日期或参数，结果即时显示，点「复制」即可粘贴到账套、凭证或表格里。输入非数字、负数、超出范围或跨未收录年份时，界面会给出明确提示，不会静默算错。", tip: "金额按「元」输入，最多两位小数；跨年账期注意节假日数据的年份范围。" },
+        { n: 5, title: "语言、主题与数据范围", body: "左下角下拉框切换中文 / English，顶部月亮图标切深浅主题，设置保存在本机。节假日数据本地收录 2001–2027 年；选择 2028 年及以后，月历与日期计算会显示「未收录年份」提示。", shot: "/assets/img/guide/fin-lang.png", shotAlt: "界面左下的语言下拉框（中文 / English）与版本号，顶部月亮图标用于切换深浅主题" },
+      ],
+      namingTitle: "结果与复制",
+      naming: "本工具不生成文件，也不改写你的数据：所有结果只在界面显示，可一键复制到剪贴板。金额统一按元处理、保留两位小数，日期按公历输入；如需留档，把复制的结果粘贴进自己的表格或凭证即可。",
+      notes: [
+        "节假日数据为本地 JSON，收录 2001–2027 年；2028 年及以后按周一至周五估算并给出提示，正式安排发布后需更新数据文件。",
+        "工资个税按累计预扣法估算，实际应纳税额以单位申报与税务机关口径为准。",
+        "金额超过约 90 万亿元或输入不合法值时会拒绝计算并提示，不会给出结果。",
       ],
     },
   },
