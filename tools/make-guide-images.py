@@ -239,3 +239,54 @@ crop_shot(CM, os.path.join(GUIDE_DIR, "cm-preset.png"), (214, 300, 592, 470), 1.
 crop_shot(CM, os.path.join(GUIDE_DIR, "cm-output.png"), (214, 470, 592, 806), 1.5)
 crop_shot(CM, os.path.join(GUIDE_DIR, "cm-editor.png"), (608, 128, 1266, 806), 1.2)
 crop_shot(CM, os.path.join(GUIDE_DIR, "cm-theme.png"), (0, 0, 206, 96), 2.6)
+
+
+# ---- 印章提取 / SealExtractor（真实界面截图 1280×860，浅色，已识别 2 页 8 章）----
+SEALSHOT = r"E:\rustc\tools\seal\ScreenShot_2026-11-12_seal.png"
+
+
+def make_seal_icon(dst, S=512):
+    """印章圆 + 红色印泥 + 识别角框，表达「自动圈出并导出红章」。"""
+    BG = (166, 58, 48)  # 深朱红，与 pdf 棕红/财务红区分
+    GOLD = (240, 196, 96)
+    im = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle([0, 0, S - 1, S - 1], radius=112, fill=BG)
+    # 识别角框（四角）
+    m, L, t = 92, 78, 15
+    for (x, y, dx, dy) in ((m, m, 1, 1), (S - m, m, -1, 1),
+                           (m, S - m, 1, -1), (S - m, S - m, -1, -1)):
+        d.line([(x, y), (x + dx * L, y)], fill=GOLD, width=t)
+        d.line([(x, y), (x, y + dy * L)], fill=GOLD, width=t)
+    # 圆形印章外圈 + 内五角星
+    d.ellipse([158, 158, 354, 354], outline=WHITE, width=20)
+    cx, cy, R = 256, 262, 62
+    import math
+    pts = []
+    for i in range(10):
+        ang = -math.pi / 2 + i * math.pi / 5
+        r = R if i % 2 == 0 else R * 0.42
+        pts.append((cx + r * math.cos(ang), cy + r * math.sin(ang)))
+    d.polygon(pts, fill=WHITE)
+    d.rounded_rectangle([172, 372, 340, 388], radius=8, fill=WHITE)
+    im.save(dst, optimize=True)
+    print("OK", os.path.basename(dst), im.size)
+
+
+make_seal_icon(os.path.join(IMG_DIR, "seal-extractor-icon.png"))
+Image.open(SEALSHOT).convert("RGB").save(
+    os.path.join(IMG_DIR, "seal-extractor-cover.png"), optimize=True)
+print("OK seal-extractor-cover.png")
+
+legend_annotated(
+    SEALSHOT, os.path.join(IMG_DIR, "seal-extractor-guide.png"),
+    [(0, 76, 248, 508), (250, 76, 936, 812), (938, 76, 1280, 760)],
+    [(1, "文件与参数"), (2, "预览与标注"), (3, "印章结果")],
+)
+
+crop_shot(SEALSHOT, os.path.join(GUIDE_DIR, "seal-files.png"), (0, 76, 248, 250), 1.9)
+crop_shot(SEALSHOT, os.path.join(GUIDE_DIR, "seal-params.png"), (0, 250, 248, 508), 1.9)
+crop_shot(SEALSHOT, os.path.join(GUIDE_DIR, "seal-preview.png"), (350, 120, 840, 700), 1.35)
+crop_shot(SEALSHOT, os.path.join(GUIDE_DIR, "seal-mode.png"), (938, 76, 1280, 250), 1.9)
+crop_shot(SEALSHOT, os.path.join(GUIDE_DIR, "seal-cards.png"), (938, 250, 1280, 760), 1.6)
+crop_shot(SEALSHOT, os.path.join(GUIDE_DIR, "seal-export.png"), (938, 748, 1280, 846), 2.2)

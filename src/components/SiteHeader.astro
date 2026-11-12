@@ -3,7 +3,7 @@
 import { site } from '../data/site';
 import Icon from './Icon.astro';
 
-interface Props { active?: 'home' | 'pdf' | 'image' | 'finance' | 'batch' | 'meta' | 'privacy' | 'disclaimer'; }
+interface Props { active?: 'home' | 'pdf' | 'image' | 'finance' | 'batch' | 'meta' | 'seal' | 'privacy' | 'disclaimer'; }
 const { active } = Astro.props;
 
 const links = [
@@ -13,6 +13,7 @@ const links = [
   { key: 'finance', href: '/apps/finance-toolbox/', label: '财务工具箱' },
   { key: 'batch', href: '/apps/batch-rename/', label: '批量重命名' },
   { key: 'meta', href: '/apps/clear-meta/', label: '元数据管理' },
+  { key: 'seal', href: '/apps/seal-extractor/', label: '印章提取' },
 ];
 ---
 <header class="site-header">

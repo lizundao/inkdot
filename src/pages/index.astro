@@ -7,8 +7,10 @@ import AppCard from '../components/AppCard.astro';
 import { site } from '../data/site';
 import { liveApps, apps } from '../data/apps';
 
-// 推荐位：优先取显式标记的最新款，否则退回「最近更新」的一款。
-const spotlight = [...liveApps].reverse().sort((a, b) => b.updated.localeCompare(a.updated))[0];
+// 推荐位：显式指定最新上架的一款，避免同日更新时依赖排序细节。
+const SPOTLIGHT_ID = 'seal-extractor';
+const spotlight = liveApps.find((a) => a.id === SPOTLIGHT_ID)
+  ?? [...liveApps].reverse().sort((a, b) => b.updated.localeCompare(a.updated))[0];
 ---
 <BaseLayout title={site.slogan} active="home" ogImage={spotlight ? spotlight.cover : "/assets/img/pdf-toolbox-cover.png"}>
   <!-- Hero -->

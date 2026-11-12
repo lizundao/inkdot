@@ -52,6 +52,7 @@ const IMG_RELEASE = "https://github.com/lizundao/image-processor/releases/downlo
 const FIN_RELEASE = "https://github.com/lizundao/finance-toolbox/releases/download/v0.1.0/";
 const BAT_RELEASE = "https://github.com/lizundao/batch-rename/releases/download/v0.1.0/";
 const CM_RELEASE = "https://github.com/lizundao/clear-meta/releases/download/v0.1.0/";
+const SEAL_RELEASE = "https://github.com/lizundao/seal-extractor/releases/download/v1.1.0/";
 
 export const apps: App[] = [
   {
@@ -457,6 +458,92 @@ export const apps: App[] = [
         "单次最多 500 个文件，目录扫描深度 8 层、条数上限 5000；文件特别多时建议分批。",
         "Office 重新打包后数字签名必然失效（Office 机制决定），宏会原样保留；需保留签名请勿处理。",
         "暂不支持旧版 Office（doc / xls / ppt）及 TIFF / HEIC；高敏感场景如需彻底干净，建议清除元数据后再打印扫描。",
+      ],
+    },
+  },
+
+  {
+    id: "seal-extractor",
+    name: "印章提取",
+    tagline: "识别 · 预览 · 补色 · 批量导出",
+    summary: "合同图片或 PDF 里的红色印章，自动找出、逐枚预览、批量导出 PNG。",
+    description:
+      "离线桌面印章提取工具，上传合同图片或多页 PDF，自动识别所有红色印章，逐枚预览并批量导出独立 PNG。内置周边补色修复，可清除压在章上的黑色签字与印刷字。识别在笔记本内存完成，不上传云端。",
+    version: "1.1.0",
+    updated: "2026-11-12",
+    icon: "/assets/img/seal-extractor-icon.png",
+    cover: "/assets/img/seal-extractor-cover.png",
+    tags: ["印章提取", "合同", "PDF", "图片", "OpenCV", "批量导出"],
+    featured: true,
+    status: "live",
+    url: "/apps/seal-extractor/",
+    guideUrl: "/apps/seal-extractor/guide/",
+    platforms: ["Windows", "macOS"],
+    repo: "https://github.com/lizundao/seal-extractor",
+    downloads: [
+      { label: "Windows 便携版", os: "Windows", note: "解压即用 · 单文件 exe", url: SEAL_RELEASE + "SealExtractor-1.1.0-portable-win-x64.zip" },
+      { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 当前用户目录", url: SEAL_RELEASE + "SealExtractor-1.1.0-setup-win-x64.exe" },
+      { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · aarch64", url: SEAL_RELEASE + "SealExtractor-1.1.0-aarch64.dmg" },
+      { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: SEAL_RELEASE + "SealExtractor-1.1.0-aarch64.app.zip" },
+      { label: "百度网盘（备用）", os: "网盘", note: "免输码直达 · 永久有效", url: "__SEAL_PAN_URL__", code: "__SEAL_PAN_CODE__", external: true },
+    ],
+    features: [
+      { k: "完全离线", v: "内嵌 OpenCV.js 引擎，识别全程在本机内存完成，不上传、无网络请求" },
+      { k: "自由使用", v: "依据 MIT 许可开放源码，当前版本自由使用，无广告" },
+      { k: "绿色便携", v: "便携版解压即用，不写注册表，删文件夹即卸载" },
+      { k: "自动识别", v: "双红区间 + 形态学闭运算 + 轮廓筛选，圆章、椭圆章、方章都能找出" },
+      { k: "补色修复", v: "用周边红色补回被黑色签字 / 印刷字盖住的笔画，清除章内黑杂点" },
+      { k: "四种输出", v: "透明底红章 / 白底红章 / 原图裁切 / 去黑字裁切" },
+      { k: "批量导出", v: "单张另存、打包 ZIP（附印章清单 CSV）、桌面版可直接导出到文件夹" },
+      { k: "多页 PDF", v: "内置 pdf.js 逐页渲染，每页单独列出、单独识别，清晰度 1.5×–3× 可调" },
+    ],
+    modules: [
+      { k: "导入", v: "拖拽 / 多选，支持 PNG、JPG、WEBP、BMP、GIF、TIFF 图片与多页 PDF" },
+      { k: "红色识别", v: "HSV 双红区间、饱和度 / 密度 / 形状比阈值，可调参数适应褪色与扫描件" },
+      { k: "框合并", v: "重叠框按 IoU 合并，结果带编号、置信度、尺寸与红像素占比" },
+      { k: "周边补色", v: "8 方向找可信红色按距离加权补色，可调半径，关闭即输出原始像素" },
+      { k: "输出模式", v: "透明底 / 白底 / 原图裁切 / 去黑字裁切，统一章色消除暗红噪点" },
+      { k: "导出", v: "单张 PNG、所选印章 ZIP（含印章清单.csv）、直接导出到文件夹" },
+    ],
+    requirements: [
+      { k: "操作系统", v: "Windows 10 / 11（64 位）；macOS Apple 芯片（aarch64）" },
+      { k: "运行时", v: "Windows 需 WebView2 运行时（Win10/11 通常已预装，内置离线引导器）" },
+      { k: "内存", v: "建议 4 GB 及以上；首次加载约 13 MB 离线引擎，之后无需联网" },
+      { k: "磁盘空间", v: "约 20 MB" },
+      { k: "处理上限", v: "单次最多 60 个文件 / 200 页；单个 PDF 120 页、150 MB；单图单边 12000 px" },
+      { k: "扫描建议", v: "扫描件建议 200 DPI 以上，过低分辨率细笔画印章可能漏检" },
+      { k: "首次运行", v: "软件未购买代码签名，可能被 SmartScreen / Gatekeeper 拦截，属正常现象" },
+    ],
+    faq: [
+      { q: "双击 exe 没反应？", a: "检查是否被杀毒软件拦截；确认是 64 位 Windows 且已安装 WebView2 运行时；也可换用 NSIS 安装版。" },
+      { q: "SmartScreen 提示「未知发布者」或 macOS 提示「已损坏」？", a: "软件尚未购买代码签名，属正常现象。Windows 点「更多信息」→「仍要运行」；macOS 可在终端执行 xattr -dr com.apple.quarantine /Applications/SealExtractor.app 后重新打开。" },
+      { q: "便携版如何卸载？", a: "直接删除解压文件夹即可，不会在系统中残留注册表项。" },
+      { q: "文件会上传吗？", a: "不会。图片与 PDF 全程在本机内存处理，OpenCV 引擎已内嵌，无账号、无网络请求。" },
+      { q: "有些印章识别不出来怎么办？", a: "印章褪色漏检时调低「红色饱和度下限」与「最小印章边长」；章被拆成几块时调大「笔画连接强度」；改完点「把参数应用到全部页面」。" },
+      { q: "红色横线、手写红字被当成印章？", a: "调高「红色密度下限」、调小「形状比上限」，可过滤细长红条与红字块。" },
+      { q: "导出的透明底 PNG 还有黑色碎字 / 毛边？", a: "保持「补色修复黑色压字」开启：黑色笔画太粗就调大「补色半径」，相邻笔画被连在一起则调小。想看原始像素可关掉开关并选「原图裁切」。" },
+      { q: "章上有黑色签字，能去掉吗？", a: "选「去黑字裁切」模式并开启补色修复，可保留合同底纹、清除黑色签字与印刷字；透明底 / 白底模式也会清掉章内黑杂点并统一章色。" },
+      { q: "PDF 很多页会不会卡？", a: "单页过大时会自动降低渲染清晰度以避免内存溢出；单个 PDF 最多处理 120 页、单次累计 200 页，超出请拆分后再导入。" },
+      { q: "是否收费？", a: "采用 MIT 开源许可，当前版本依据许可自由使用，无广告。" },
+    ],
+    guide: {
+      screenshot: "/assets/img/seal-extractor-guide.png",
+      screenshotAlt: "印章提取主界面：左侧为文件列表与识别参数，中间为合同预览与红色编号标注框，右侧为识别出的 8 枚印章结果卡片",
+      lead: "印章提取是「拖进来、看结果、勾选导出」的工具：左边调参数，中间看标注，右边勾选要导出的章。下面按真实界面走一遍，把一份两页合同里的 8 枚红章提取出来。",
+      steps: [
+        { n: 1, title: "下载与启动", body: "下载 Windows 便携版 zip 并解压到任意目录，双击「印章提取.exe」启动；也可运行 NSIS 安装版。macOS 打开 dmg 把应用拖入「应用程序」，首次被 Gatekeeper 拦截的处理方式见详情页常见问题。", tip: "便携版不写注册表，删除文件夹即卸载；首次打开需 1–3 秒加载离线引擎。" },
+        { n: 2, title: "添加合同图片或 PDF", body: "把合同图片或多页 PDF 拖进窗口，或点右上「打开合同」。PDF 会逐页渲染、逐页识别，每页单独列出。软件自带一份两页「示例合同.pdf」，可直接拖进去试用（共 8 枚红章）。", shot: "/assets/img/guide/seal-files.png", shotAlt: "左侧「文件 / 页面」列表，导入 contract.pdf 后显示第 1/2 页与第 2/2 页，每页各 4 枚印章" },
+        { n: 3, title: "看识别结果与标注", body: "中间预览区会用带编号的绿色框标出每一枚识别到的印章，右侧「识别结果」逐枚列出缩略图、置信度、尺寸与红色像素占比。点任一卡片可在原图上定位。", tip: "置信度分高 / 中 / 低，低的可能是红色表格线或手写红字，可取消勾选。", shot: "/assets/img/guide/seal-preview.png", shotAlt: "中间合同预览，红色圆章、椭圆章、矩形章被绿色编号框 1、2、3、4 标出" },
+        { n: 4, title: "识别不准时调参数", body: "褪色漏检就调低「红色饱和度下限」和「最小印章边长」；章被拆成几块就调大「笔画连接强度」；红色横线 / 红字被误认就调高「红色密度下限」、调小「形状比上限」。改完点「把参数应用到全部页面」。", shot: "/assets/img/guide/seal-params.png", shotAlt: "左侧识别参数区：红色饱和度下限、最小印章边长、形状比上限、红色密度下限、笔画连接强度、重叠框合并" },
+        { n: 5, title: "选输出模式与补色", body: "右侧「输出」下拉有透明底、白底、原图裁切、去黑字裁切四种。默认开启「补色修复黑色压字」，用周边红色补回被黑签字盖住的笔画并统一章色；黑色笔画粗就调大「补色半径」，想看原始像素就关掉开关并选「原图裁切」。", tip: "透明底只保留红色笔画，若合同本身有红色文字 / 表格线可能一起保留，建议用白底或原图裁切核对。", shot: "/assets/img/guide/seal-mode.png", shotAlt: "右侧输出模式下拉框（默认透明底红章）与「补色修复黑色压字」开关、补色半径滑块" },
+        { n: 6, title: "勾选并批量导出", body: "在右侧逐枚勾选要导出的印章，点「保存这张 PNG」单张另存，或点「导出所选（ZIP）」得到每枚印章的 PNG 加一份印章清单 CSV；桌面版还能「导出到文件夹」把每枚直接写成独立 PNG。个别写入失败会明确列出，已写出的不回退。", shot: "/assets/img/guide/seal-cards.png", shotAlt: "右侧识别结果卡片列表，每张有勾选框、印章编号、置信度、尺寸与「保存这张 PNG」按钮" },
+      ],
+      namingTitle: "导出命名",
+      naming: "单张保存与导出到文件夹时，文件名按「页码_来源_第几页_章编号.png」生成，例如 01_contract_P1_章1.png，多页多章不会重名。导出 ZIP 时另附一份「印章清单.csv」，记录每枚的来源、页码、坐标、尺寸与置信度，便于核对归档。",
+      notes: [
+        "扫描件建议 200 DPI 以上；过低分辨率下细笔画印章可能漏检。",
+        "透明底模式只保留红色笔画，合同本身的红色文字 / 表格线可能一起保留，建议用白底或原图裁切模式核对。",
+        "单次最多 60 个文件 / 200 页，单个 PDF 120 页、150 MB；单图单边不超过 12000 px，超大页面会自动降低渲染清晰度。",
       ],
     },
   },
