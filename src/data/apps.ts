@@ -50,6 +50,7 @@ export type App = {
 const PDF_RELEASE = "https://github.com/lizundao/pdf-toolbox/releases/download/v1.0.0/";
 const IMG_RELEASE = "https://github.com/lizundao/image-processor/releases/download/v1.0.0/";
 const FIN_RELEASE = "https://github.com/lizundao/finance-toolbox/releases/download/v0.1.0/";
+const BAT_RELEASE = "https://github.com/lizundao/batch-rename/releases/download/v0.1.0/";
 
 export const apps: App[] = [
   {
@@ -284,6 +285,90 @@ export const apps: App[] = [
         "节假日数据为本地 JSON，收录 2001–2027 年；2028 年及以后按周一至周五估算并给出提示，正式安排发布后需更新数据文件。",
         "工资个税按累计预扣法估算，实际应纳税额以单位申报与税务机关口径为准。",
         "金额超过约 90 万亿元或输入不合法值时会拒绝计算并提示，不会给出结果。",
+      ],
+    },
+  },
+
+  {
+    id: "batch-rename",
+    name: "批量重命名",
+    tagline: "查找替换 · 智能模板 · 自动编号 · 批量粘贴",
+    summary: "六种改名模式，实时预览、冲突拦截、可撤销，一次改完整个文件夹。",
+    description:
+      "离线桌面批量文件重命名工具，提供查找替换、智能重命名、插入内容、自动编号、手动编辑与批量粘贴六种模式，支持图片 EXIF、音频 ID3 元数据占位符、中英双语与操作历史撤销。文件始终留在本机，不上传云端。",
+    version: "0.1.0",
+    updated: "2026-11-12",
+    icon: "/assets/img/batch-rename-icon.png",
+    cover: "/assets/img/batch-rename-cover.png",
+    tags: ["文件管理", "批量重命名", "查找替换", "自动编号", "EXIF", "可撤销"],
+    featured: true,
+    status: "live",
+    url: "/apps/batch-rename/",
+    guideUrl: "/apps/batch-rename/guide/",
+    platforms: ["Windows", "macOS"],
+    repo: "https://github.com/lizundao/batch-rename",
+    downloads: [
+      { label: "Windows 便携版", os: "Windows", note: "解压即用 · 约 2 MB", url: BAT_RELEASE + "BatchRename-0.1.0-portable-win-x64.zip" },
+      { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 约 1.6 MB", url: BAT_RELEASE + "BatchRename-0.1.0-setup-win-x64.exe" },
+      { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · 约 2.1 MB", url: BAT_RELEASE + "BatchRename-0.1.0-aarch64.dmg" },
+      { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: BAT_RELEASE + "BatchRename-0.1.0-aarch64.app.zip" },
+      { label: "百度网盘（备用）", os: "网盘", note: "免输码直达 · 永久有效", url: "https://pan.baidu.com/s/1Jtx3lMcPxLDeTcfuWVCvLQ?pwd=tm8x", code: "tm8x", external: true },
+    ],
+    features: [
+      { k: "完全离线", v: "文件与元数据都在本机读取，不上传、不追踪、无需账号" },
+      { k: "自由使用", v: "依据 MIT 许可开放源码，当前版本自由使用，无广告" },
+      { k: "绿色便携", v: "便携版解压即用，不写注册表，删文件夹即卸载" },
+      { k: "所见即所得", v: "六种模式统一实时预览目标文件名，列表显示的就是执行结果" },
+      { k: "不覆盖不丢文件", v: "目标已存在、批次内重名或名称非法一律跳过；两阶段临时名事务，失败自动放回原名" },
+      { k: "可撤销", v: "每次执行记入操作历史，交换与链式改名也能整批还原；部分失败可重试" },
+      { k: "中英双语", v: "界面中 / 英切换，浅色 / 深色主题，设置记在本机" },
+    ],
+    modules: [
+      { k: "查找替换", v: "普通文本与正则替换，支持忽略大小写、只改文件名或扩展名" },
+      { k: "智能重命名", v: "模板变量：{name}、{index}、{created}、图片 EXIF 拍摄时间、音频 ID3 标签" },
+      { k: "插入内容", v: "在指定位置插入前缀、后缀或自定义文本" },
+      { k: "自动编号", v: "阿拉伯数字 / 罗马数字 / 字母序号，可设起始值、步长与补零" },
+      { k: "手动编辑", v: "在列表中直接修改新文件名，逐条微调" },
+      { k: "批量粘贴", v: "从 Excel / 表格复制一列名称，Ctrl+V 一次填充" },
+      { k: "目录与元数据", v: "递归子目录、按名称 / 日期 / 大小排序、EXIF 与 ID3 占位符" },
+    ],
+    requirements: [
+      { k: "操作系统", v: "Windows 10 / 11（64 位）；macOS 12+ Apple 芯片（aarch64）" },
+      { k: "运行时", v: "Windows 需 Edge WebView2 运行时（Win10/11 通常已预装）" },
+      { k: "内存", v: "建议 4 GB 及以上" },
+      { k: "磁盘空间", v: "约 30 MB" },
+      { k: "单批上限", v: "单批最多 5000 个文件；目录遍历深度上限 32 层，不跟随符号链接" },
+      { k: "首次运行", v: "软件未购买代码签名，可能被 SmartScreen / Gatekeeper 拦截，属正常现象" },
+    ],
+    faq: [
+      { q: "双击 exe 没反应？", a: "检查是否被杀毒软件拦截；确认是 64 位 Windows 且已安装 Edge WebView2 运行时；也可换用 NSIS 安装版。" },
+      { q: "SmartScreen 提示「未知发布者」或 macOS 提示「已损坏」？", a: "软件尚未购买代码签名，属正常现象。Windows 点「更多信息」→「仍要运行」；macOS 可在终端执行 xattr -dr com.apple.quarantine /Applications/BatchRename.app 后重新打开。" },
+      { q: "便携版如何卸载？", a: "直接删除解压文件夹即可，不会在系统中残留注册表项；操作历史也只存在本机。" },
+      { q: "会覆盖已有的文件吗？", a: "不会。目标名称已存在、批次内重名（含大小写不敏感重名）或名称不合法时，该项会跳过并在列表中标出原因，不会覆盖任何文件。" },
+      { q: "改错了能撤销吗？", a: "可以。每次执行都会记入「操作历史」，点击「撤销」或用 Ctrl+Z 即可还原；若只还原了一部分，未成功项仍留在历史里，再点一次即可重试。" },
+      { q: "支持两个文件互换名字，或 A→B→C 这种链式改名吗？", a: "支持。执行时先全部移到临时名腾空，再落到目标名，因此交换、链式、只改大小写都能正确完成；中途失败会自动放回原名。" },
+      { q: "为什么有些名字被标为非法？", a: "Windows 不允许 \\ / : * ? \" < > | 等字符、CON / NUL 等保留设备名，也不允许首尾空格或点、超长名称。新名字里带路径或跨目录同样会被拒绝。" },
+      { q: "正则写得太复杂会卡住吗？", a: "预览在后台线程计算并带超时；带嵌套量词、反向引用或超大重复次数等高风险写法会被自动停用并给出提示，不会冻结界面。" },
+      { q: "是否收费？会不会上传我的文件？", a: "当前版本依据 MIT 许可自由使用。文件与元数据全程在本机读取和改名，无账号、无云上传。" },
+    ],
+    guide: {
+      screenshot: "/assets/img/batch-rename-guide.png",
+      screenshotAlt: "批量重命名主界面，左侧为六种改名模式，中间为文件列表，底部为工具栏与操作历史",
+      lead: "批量重命名是「先预览、再执行」的工具：左边选模式、底部添加文件，列表里直接看到改完的名字，确认无误后再整批执行。下面按真实界面走一遍。",
+      steps: [
+        { n: 1, title: "下载与启动", body: "下载 Windows 便携版 zip 并解压到任意目录，双击 batch-rename.exe 启动；也可运行 NSIS 安装版。macOS 打开 dmg 把应用拖入「应用程序」，首次被 Gatekeeper 拦截的处理方式见详情页常见问题。", tip: "便携版不写注册表，删除文件夹即卸载；先在少量文件的副本目录里试一遍规则更稳妥。" },
+        { n: 2, title: "认识界面", body: "左侧是功能导航：查找替换、智能重命名、插入内容、自动编号、手动编辑、批量粘贴六种模式，下方还有「关于」「许可证」与语言下拉框。中间是文件列表，底部是添加文件、排序和执行按钮。", tip: "左下角可切换中文 / English，左上角的箭头按钮可折叠侧栏。", shot: "/assets/img/guide/batch-nav.png", shotAlt: "左侧功能导航：查找替换、智能重命名、插入内容、自动编号、手动编辑、批量粘贴，下方还有关于与许可证入口" },
+        { n: 3, title: "添加文件或整个文件夹", body: "点底部「添加文件」或「添加文件夹」，也可把文件拖进列表。需要连子目录一起处理时勾选「递归子目录」；列表支持按名称、日期、大小排序。", shot: "/assets/img/guide/batch-toolbar.png", shotAlt: "底部工具栏：添加文件、添加文件夹、清空、递归子目录勾选项、按名称升序排序、已选文件数、执行重命名" },
+        { n: 4, title: "选模式并设置规则", body: "在左侧点任一模式，右侧顶部会出现对应的设置区。例如「查找替换」填查找内容与替换文本，「自动编号」设起始值、步长、补零位数与序号样式；手动编辑模式可直接在列表里逐条改名，批量粘贴模式支持从 Excel 复制一列名称后 Ctrl+V 填充。", tip: "所有模式都会实时预览目标文件名，不用执行就能看到结果；带嵌套量词的复杂正则会被自动停用并提示。", shot: "/assets/img/guide/batch-topbar.png", shotAlt: "顶部规则提示区与「批量粘贴」按钮，设置区会随左侧所选模式切换" },
+        { n: 5, title: "核对预览再执行", body: "列表里逐行核对「原名 → 新名」。目标已存在、批次内重名或名称非法的行会标出原因并跳过，不会覆盖文件。确认后点右下角「执行重命名」，整批一次完成。", shot: "/assets/img/guide/batch-history.png", shotAlt: "底部「操作历史」区域，尚未执行时显示「暂无操作记录」，执行后这里会出现本次记录与撤销按钮" },
+        { n: 6, title: "撤销与重试", body: "改错了就在「操作历史」点「撤销」，或按 Ctrl+Z。交换文件名、链式改名也能整批还原；若个别文件正被占用只还原了一部分，未成功项会留在历史里，关掉占用程序后再点一次「撤销」即可重试。", shot: "/assets/img/guide/batch-lang.png", shotAlt: "左下角语言下拉框与版本号，可切换中文 / English" },
+      ],
+      namingTitle: "命名规则与撤销",
+      naming: "工具直接改写原文件名，不额外生成副本：新名字只能是「一个文件名」，不能带路径；源与目标必须留在同一目录。Windows 非法字符、保留设备名（CON、NUL 等）、首尾空格与点、超长名称都会被拒绝。目标已存在一律跳过，绝不覆盖；每次执行都会写入操作历史，可整批撤销或重试未成功项。",
+      notes: [
+        "单批最多 5000 个文件，目录遍历深度上限 32 层，不跟随符号链接；文件特别多时建议分批处理。",
+        "执行前请关掉正在占用文件的程序（如播放器、编辑器），避免个别项改名失败。",
+        "预览在后台线程计算，超大列表可能需要等片刻；预览未更新时界面会提示暂缓执行。",
       ],
     },
   },

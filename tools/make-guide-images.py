@@ -152,3 +152,47 @@ crop_shot(FIN, os.path.join(GUIDE_DIR, "fin-nav.png"), (0, 100, 195, 655), 1.8)
 crop_shot(FIN, os.path.join(GUIDE_DIR, "fin-tools.png"), (240, 140, 1060, 420), 1.2)
 crop_shot(FIN, os.path.join(GUIDE_DIR, "fin-lang.png"), (0, 640, 195, 760), 2.6)
 crop_shot(FIN, os.path.join(GUIDE_DIR, "fin-topbar.png"), (0, 0, 260, 46), 3)
+
+
+# ---- 批量重命名（真实界面截图 960×720）----
+BAT = r"E:\rustc\tools\batch\ScreenShot_2026-06-12_210425_265.png"
+
+
+def make_batch_icon(dst, S=512):
+    """两张文件卡片 + 箭头，表达「原名 → 新名」。"""
+    BG = (126, 106, 186)
+    im = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle([0, 0, S - 1, S - 1], radius=112, fill=BG)
+    for x0 in (72, 296):
+        d.rounded_rectangle([x0, 132, x0 + 144, 344], radius=22, outline=WHITE, width=13)
+        for y, w in ((184, 88), (216, 64)):
+            d.rounded_rectangle([x0 + 24, y, x0 + 24 + w, y + 12], radius=6, fill=WHITE)
+    ft = f(74, True)
+    for t, cx in (("A", 144), ("B", 368)):
+        bb = d.textbbox((0, 0), t, font=ft)
+        d.text((cx - (bb[2] - bb[0]) / 2 - bb[0],
+                272 - (bb[3] - bb[1]) / 2 - bb[1]), t, font=ft, fill=WHITE)
+    d.line([(228, 238), (260, 238)], fill=WHITE, width=14)
+    d.polygon([(260, 214), (286, 238), (260, 262)], fill=WHITE)
+    im.save(dst, optimize=True)
+    print("OK", os.path.basename(dst), im.size)
+
+
+make_batch_icon(os.path.join(IMG_DIR, "batch-rename-icon.png"))
+Image.open(BAT).convert("RGB").save(
+    os.path.join(IMG_DIR, "batch-rename-cover.png"), optimize=True)
+print("OK batch-rename-cover.png")
+
+legend_annotated(
+    BAT, os.path.join(IMG_DIR, "batch-rename-guide.png"),
+    [(0, 85, 223, 470), (223, 0, 960, 90),
+     (223, 90, 960, 600), (223, 600, 960, 720)],
+    [(1, "模式导航"), (2, "规则提示"), (3, "文件列表"), (4, "执行与历史")],
+)
+
+crop_shot(BAT, os.path.join(GUIDE_DIR, "batch-nav.png"), (0, 0, 223, 500), 1.8)
+crop_shot(BAT, os.path.join(GUIDE_DIR, "batch-toolbar.png"), (223, 665, 960, 720), 2.2)
+crop_shot(BAT, os.path.join(GUIDE_DIR, "batch-topbar.png"), (223, 0, 960, 95), 1.6)
+crop_shot(BAT, os.path.join(GUIDE_DIR, "batch-history.png"), (223, 600, 640, 668), 2.4)
+crop_shot(BAT, os.path.join(GUIDE_DIR, "batch-lang.png"), (0, 590, 223, 720), 2.4)

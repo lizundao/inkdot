@@ -302,7 +302,7 @@ button { font-family: inherit; cursor: pointer; }
 .version { font-size: 13px; color: var(--ink-400); font-weight: 600; }
 
 /* ---------- 工具网格 ---------- */
-.app-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
 .app-card {
   background: var(--paper-2); border: 1px solid var(--line);
   border-radius: var(--radius); padding: 24px;

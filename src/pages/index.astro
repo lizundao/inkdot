@@ -7,8 +7,8 @@ import AppCard from '../components/AppCard.astro';
 import { site } from '../data/site';
 import { liveApps, apps } from '../data/apps';
 
-// 推荐位自动取最近更新的一款，新工具上架后无需改首页。
-const spotlight = [...liveApps].sort((a, b) => b.updated.localeCompare(a.updated))[0];
+// 推荐位自动取最近更新的一款；更新日期相同则取最后上架的，新工具上架后无需改首页。
+const spotlight = [...liveApps].reverse().sort((a, b) => b.updated.localeCompare(a.updated))[0];
 ---
 <BaseLayout title={site.slogan} active="home" ogImage="/assets/img/pdf-toolbox-cover.png">
   <!-- Hero -->

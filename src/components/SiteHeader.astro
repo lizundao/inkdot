@@ -3,7 +3,7 @@
 import { site } from '../data/site';
 import Icon from './Icon.astro';
 
-interface Props { active?: 'home' | 'pdf' | 'image' | 'finance' | 'privacy' | 'disclaimer'; }
+interface Props { active?: 'home' | 'pdf' | 'image' | 'finance' | 'batch' | 'privacy' | 'disclaimer'; }
 const { active } = Astro.props;
 
 const links = [
@@ -11,6 +11,7 @@ const links = [
   { key: 'pdf', href: '/apps/pdf-toolbox/', label: 'PDF 工具箱' },
   { key: 'image', href: '/apps/image-processor/', label: '图片处理器' },
   { key: 'finance', href: '/apps/finance-toolbox/', label: '财务工具箱' },
+  { key: 'batch', href: '/apps/batch-rename/', label: '批量重命名' },
 ];
 ---
 <header class="site-header">
