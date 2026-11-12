@@ -51,6 +51,7 @@ const PDF_RELEASE = "https://github.com/lizundao/pdf-toolbox/releases/download/v
 const IMG_RELEASE = "https://github.com/lizundao/image-processor/releases/download/v1.0.0/";
 const FIN_RELEASE = "https://github.com/lizundao/finance-toolbox/releases/download/v0.1.0/";
 const BAT_RELEASE = "https://github.com/lizundao/batch-rename/releases/download/v0.1.0/";
+const CM_RELEASE = "https://github.com/lizundao/clear-meta/releases/download/v0.1.0/";
 
 export const apps: App[] = [
   {
@@ -369,6 +370,93 @@ export const apps: App[] = [
         "单批最多 5000 个文件，目录遍历深度上限 32 层，不跟随符号链接；文件特别多时建议分批处理。",
         "执行前请关掉正在占用文件的程序（如播放器、编辑器），避免个别项改名失败。",
         "预览在后台线程计算，超大列表可能需要等片刻；预览未更新时界面会提示暂缓执行。",
+      ],
+    },
+  },
+
+  {
+    id: "clear-meta",
+    name: "元数据管理",
+    tagline: "查看 · 清除 · 编辑 · 脱敏",
+    summary: "PDF、Office、图片元数据，本地查看、清除与编辑，对外发文件前先去掉隐私痕迹。",
+    description:
+      "离线桌面元数据管理工具，支持查看、选择性清除与编辑 PDF、Office、图片文件中的元数据。内置投标脱敏、隐私清除预设，处理前后对比、批量处理与报告导出。所有处理在本机完成，数据不出本机。",
+    version: "0.1.0",
+    updated: "2026-11-12",
+    icon: "/assets/img/clear-meta-icon.png",
+    cover: "/assets/img/clear-meta-cover.png",
+    tags: ["元数据", "隐私", "投标脱敏", "PDF", "Office", "图片"],
+    featured: true,
+    status: "live",
+    url: "/apps/clear-meta/",
+    guideUrl: "/apps/clear-meta/guide/",
+    platforms: ["Windows", "macOS"],
+    repo: "https://github.com/lizundao/clear-meta",
+    downloads: [
+      { label: "Windows 便携版", os: "Windows", note: "解压即用 · 无需安装", url: CM_RELEASE + "ClearMeta-0.1.0-portable-win-x64.zip" },
+      { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 当前用户目录", url: CM_RELEASE + "ClearMeta-0.1.0-setup-win-x64.exe" },
+      { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · aarch64", url: CM_RELEASE + "ClearMeta-0.1.0-aarch64.dmg" },
+      { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: CM_RELEASE + "ClearMeta-0.1.0-aarch64.app.zip" },
+      { label: "百度网盘（备用）", os: "网盘", note: "免输码直达 · 永久有效", url: "https://pan.baidu.com/s/1GimCN4mpBesgWLXNsg9FMw?pwd=9rp6", code: "9rp6", external: true },
+    ],
+    features: [
+      { k: "完全离线", v: "文件与元数据都在本机读取和处理，不上传、不追踪、无需账号" },
+      { k: "自由使用", v: "依据 MIT 许可开放源码，当前版本自由使用，无广告" },
+      { k: "绿色便携", v: "便携版解压即用，不写注册表，删文件夹即卸载" },
+      { k: "选择性清除", v: "每个字段可单独设为保留 / 清除 / 编辑，不误删有用信息" },
+      { k: "字段编辑", v: "把作者、标题、公司等改为指定内容，统一对外署名" },
+      { k: "快速预设", v: "投标脱敏、隐私清除、全部清除，一键套用整组规则" },
+      { k: "可回溯", v: "处理前后对比一目了然；覆盖原文件先自动备份，可整批撤销" },
+      { k: "批量与报告", v: "文件夹批量处理，导出 CSV / JSON 报告便于留档" },
+    ],
+    modules: [
+      { k: "PDF", v: "作者、创建者、生成程序、创建 / 修改时间、XMP 元数据" },
+      { k: "Office", v: "作者、最后修改者、公司、应用程序、自定义属性（docx / xlsx / pptx 等）" },
+      { k: "图片", v: "EXIF、GPS 定位、拍摄设备、软件痕迹（jpg / png / webp）" },
+      { k: "字段策略", v: "保留 / 清除 / 编辑三态，按分组全保留或全清除" },
+      { k: "预设", v: "投标脱敏、隐私清除、全部清除，规则按字段匹配" },
+      { k: "输出方式", v: "另存到新目录，或覆盖原文件（自动备份、可撤销）" },
+      { k: "报告", v: "处理前后对比视图，导出 CSV / JSON 处理报告" },
+    ],
+    requirements: [
+      { k: "操作系统", v: "Windows 10 / 11（64 位）；macOS Apple 芯片（aarch64）" },
+      { k: "运行时", v: "Windows 需 WebView2 运行时（Win10/11 通常已预装，内置引导器可离线安装）" },
+      { k: "内存", v: "建议 4 GB 及以上" },
+      { k: "磁盘空间", v: "约 30 MB" },
+      { k: "单次上限", v: "单次最多 500 个文件；目录扫描深度 8 层、条数 5000" },
+      { k: "格式支持", v: "PDF；Office OOXML（doc/xlsx/pptx 及带宏版本）；jpg / png / webp。不含旧版 Office 与 TIFF / HEIC" },
+      { k: "首次运行", v: "软件未购买代码签名，可能被 SmartScreen / Gatekeeper 拦截，属正常现象" },
+    ],
+    faq: [
+      { q: "双击 exe 没反应？", a: "检查是否被杀毒软件拦截；确认是 64 位 Windows 且已安装 WebView2 运行时；也可换用 NSIS 安装版。" },
+      { q: "SmartScreen 提示「未知发布者」或 macOS 提示「已损坏」？", a: "软件尚未购买代码签名，属正常现象。Windows 点「更多信息」→「仍要运行」；macOS 可在终端执行 xattr -dr com.apple.quarantine /Applications/ClearMeta.app 后重新打开。" },
+      { q: "便携版如何卸载？", a: "直接删除解压文件夹即可，不会在系统中残留注册表项。" },
+      { q: "文件会上传到服务器吗？", a: "不会。所有读取、清除与编辑都在本机完成，离线可用，无账号、无云上传。" },
+      { q: "清除后还能恢复吗？", a: "选「覆盖原文件」时会先自动备份到应用数据目录，可在结果列表点「撤销」还原；更稳妥的做法是优先「另存到新目录」，原件完全不动。" },
+      { q: "为什么拖入 Office 文件后界面自动切换模块？", a: "软件会按文件扩展名自动识别 PDF / Office / 图片并切到对应模块，避免用错规则。" },
+      { q: "处理带宏或数字签名的 Office 文件会怎样？", a: "宏会原样保留；但 Office 文档的数字签名在重新打包后必然失效，这是 Office 签名机制决定的。如需保留签名，请勿处理该文件。" },
+      { q: "单次能处理多少文件？", a: "单次最多 500 个；目录批量扫描深度上限 8 层、条数上限 5000，超出会提示分批。" },
+      { q: "支持旧版 .doc / .xls 或 TIFF / HEIC 吗？", a: "暂不支持。Office 仅支持 OOXML 格式（docx / xlsx / pptx / docm / xlsm / pptm），图片支持 jpg / jpeg / png / webp。" },
+      { q: "是否收费？", a: "采用 MIT 开源许可，当前版本依据许可自由使用，无广告。" },
+    ],
+    guide: {
+      screenshot: "/assets/img/clear-meta-guide.png",
+      screenshotAlt: "元数据管理主界面：左侧为 PDF / Office / 图片功能模块，中间为拖放区、快速预设与输出方式，右侧为元数据编辑区",
+      lead: "元数据管理是「先看、再选、后清理」的工具：拖入文件看有哪些元数据，按字段勾选清除或编辑，再选输出方式。下面按真实界面走一遍，把对外文件里的隐私痕迹去掉。",
+      steps: [
+        { n: 1, title: "下载与启动", body: "下载 Windows 便携版 zip 并解压到任意目录，双击 clear-meta.exe 启动；也可运行 NSIS 安装版。macOS 打开 dmg 把应用拖入「应用程序」，首次被 Gatekeeper 拦截的处理方式见详情页常见问题。", tip: "便携版不写注册表，删除文件夹即卸载；建议先拿一份文件副本试一遍预设规则。" },
+        { n: 2, title: "认识界面", body: "左侧是功能模块（PDF、Office、图片）与关于、许可证入口；中间是当前模块的操作区：拖放区、快速预设、输出方式与文件列表；右侧是元数据编辑面板。拖入文件后会自动识别类型并切到对应模块。", tip: "左下角可切换深 / 浅主题；拖放区提示的「最多 500 个」是单次批量上限。", shot: "/assets/img/guide/cm-nav.png", shotAlt: "左侧功能模块导航：PDF、Office、图片，下方为关于与许可证入口" },
+        { n: 3, title: "添加文件并预览元数据", body: "把文件拖到窗口中间的虚线拖放区，或点「选择文件 / 选择文件夹（批量）」。文件加入后，右侧会列出可读的全部元数据并按字段分组，处理前先看清有哪些信息。", shot: "/assets/img/guide/cm-dropzone.png", shotAlt: "中间操作区的虚线拖放区「点击选择或拖拽文件到窗口」，下方是选择文件夹（批量）与快速预设按钮" },
+        { n: 4, title: "套用预设或逐字段设置", body: "赶时间就点「投标脱敏」「隐私清除」或「全部清除」快速预设，规则会按字段匹配；想精细控制就在右侧逐字段设为保留 / 清除 / 编辑，编辑项可把作者、标题、公司改成指定内容。未命中的字段保持原样。", tip: "投标场景优先用「投标脱敏」，可清除作者、最后修改者、应用程序、公司等易被关联的字段。", shot: "/assets/img/guide/cm-preset.png", shotAlt: "快速预设按钮：投标脱敏、隐私清除、全部清除，下方提示规则按字段匹配、未命中字段保持原样" },
+        { n: 5, title: "选输出方式并应用", body: "在「输出方式」选「另存到新目录」（推荐，原件完全不动）或「覆盖原文件（自动备份）」。选好输出目录后点「应用更改」，处理前后对比会显示每个字段的变化。", tip: "覆盖原文件会自动备份到应用数据目录，改错了可在结果里撤销；重要文件建议优先另存。", shot: "/assets/img/guide/cm-output.png", shotAlt: "输出方式单选：另存到新目录 / 覆盖原文件（自动备份），下方为输出目录、文件列表与应用更改按钮" },
+        { n: 6, title: "核对结果、撤销与导出报告", body: "处理后在右侧核对元数据编辑区的变化；需要留档就导出 CSV / JSON 报告。若覆盖了原文件且结果不满意，点结果里的「撤销」即可还原原件。", shot: "/assets/img/guide/cm-editor.png", shotAlt: "右侧元数据编辑面板，用于查看字段、选择保留或清除，并在处理后核对变更" },
+      ],
+      namingTitle: "输出与撤销",
+      naming: "选「另存到新目录」时，输出文件写到指定目录，不覆盖原件；选「覆盖原文件」时，写入前会先把原件备份到应用数据目录，可在结果里整批撤销。处理报告可导出为 CSV 或 JSON，保存在应用数据目录，便于留档核对。",
+      notes: [
+        "单次最多 500 个文件，目录扫描深度 8 层、条数上限 5000；文件特别多时建议分批。",
+        "Office 重新打包后数字签名必然失效（Office 机制决定），宏会原样保留；需保留签名请勿处理。",
+        "暂不支持旧版 Office（doc / xls / ppt）及 TIFF / HEIC；高敏感场景如需彻底干净，建议清除元数据后再打印扫描。",
       ],
     },
   },

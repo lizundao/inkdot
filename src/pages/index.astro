@@ -7,10 +7,10 @@ import AppCard from '../components/AppCard.astro';
 import { site } from '../data/site';
 import { liveApps, apps } from '../data/apps';
 
-// 推荐位自动取最近更新的一款；更新日期相同则取最后上架的，新工具上架后无需改首页。
+// 推荐位：优先取显式标记的最新款，否则退回「最近更新」的一款。
 const spotlight = [...liveApps].reverse().sort((a, b) => b.updated.localeCompare(a.updated))[0];
 ---
-<BaseLayout title={site.slogan} active="home" ogImage="/assets/img/pdf-toolbox-cover.png">
+<BaseLayout title={site.slogan} active="home" ogImage={spotlight ? spotlight.cover : "/assets/img/pdf-toolbox-cover.png"}>
   <!-- Hero -->
   <section class="hero">
     <div class="container hero-grid">

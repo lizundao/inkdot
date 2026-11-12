@@ -196,3 +196,46 @@ crop_shot(BAT, os.path.join(GUIDE_DIR, "batch-toolbar.png"), (223, 665, 960, 720
 crop_shot(BAT, os.path.join(GUIDE_DIR, "batch-topbar.png"), (223, 0, 960, 95), 1.6)
 crop_shot(BAT, os.path.join(GUIDE_DIR, "batch-history.png"), (223, 600, 640, 668), 2.4)
 crop_shot(BAT, os.path.join(GUIDE_DIR, "batch-lang.png"), (0, 590, 223, 720), 2.4)
+
+
+# ---- 元数据管理 / ClearMeta（真实界面截图 1280×820，深色主题）----
+CM = r"E:\rustc\tools\clear meta\ScreenShot_2026-11-12_clearmeta.png"
+
+
+def make_clearmeta_icon(dst, S=512):
+    """文档卡片 + 被划掉的元数据行 + 安全勾印章，表达「清除元数据、安心外发」。"""
+    BG = (74, 144, 136)  # 青绿，与站内既有图标配色区分
+    im = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle([0, 0, S - 1, S - 1], radius=112, fill=BG)
+    # 文档主体
+    d.rounded_rectangle([120, 84, 380, 428], radius=26, fill=WHITE)
+    # 文档内的「元数据行」
+    for y, w in ((150, 180), (198, 220), (246, 150)):
+        d.rounded_rectangle([152, y, 152 + w, y + 16], radius=8, fill=(214, 228, 226))
+    # 红色斜线划掉敏感信息
+    d.line([(140, 300), (368, 150)], fill=SEAL, width=18)
+    # 右下角安全勾印章
+    d.ellipse([292, 296, 452, 456], fill=SEAL, outline=WHITE, width=12)
+    d.line([(330, 376), (360, 408), (416, 340)], fill=WHITE, width=20, joint="curve")
+    im.save(dst, optimize=True)
+    print("OK", os.path.basename(dst), im.size)
+
+
+make_clearmeta_icon(os.path.join(IMG_DIR, "clear-meta-icon.png"))
+Image.open(CM).convert("RGB").save(
+    os.path.join(IMG_DIR, "clear-meta-cover.png"), optimize=True)
+print("OK clear-meta-cover.png")
+
+legend_annotated(
+    CM, os.path.join(IMG_DIR, "clear-meta-guide.png"),
+    [(0, 96, 206, 820), (214, 128, 592, 470), (214, 470, 592, 806), (608, 128, 1266, 806)],
+    [(1, "功能模块"), (2, "拖放与预设"), (3, "输出与文件"), (4, "元数据编辑")],
+)
+
+crop_shot(CM, os.path.join(GUIDE_DIR, "cm-nav.png"), (0, 90, 206, 720), 1.6)
+crop_shot(CM, os.path.join(GUIDE_DIR, "cm-dropzone.png"), (214, 128, 592, 300), 1.6)
+crop_shot(CM, os.path.join(GUIDE_DIR, "cm-preset.png"), (214, 300, 592, 470), 1.7)
+crop_shot(CM, os.path.join(GUIDE_DIR, "cm-output.png"), (214, 470, 592, 806), 1.5)
+crop_shot(CM, os.path.join(GUIDE_DIR, "cm-editor.png"), (608, 128, 1266, 806), 1.2)
+crop_shot(CM, os.path.join(GUIDE_DIR, "cm-theme.png"), (0, 0, 206, 96), 2.6)
