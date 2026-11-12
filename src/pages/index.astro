@@ -3,11 +3,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import PromiseList from '../components/PromiseList.astro';
 import FeaturedCard from '../components/FeaturedCard.astro';
+import AppCard from '../components/AppCard.astro';
 import { site } from '../data/site';
-import { liveApps } from '../data/apps';
+import { liveApps, apps } from '../data/apps';
 
-// 全部已上架工具统一在此展示，不再另设重复的小卡网格。
-const allApps = liveApps;
+// 推荐位自动取最近更新的一款，新工具上架后无需改首页。
+const spotlight = [...liveApps].sort((a, b) => b.updated.localeCompare(a.updated))[0];
 ---
 <BaseLayout title={site.slogan} active="home" ogImage="/assets/img/pdf-toolbox-cover.png">
   <!-- Hero -->
@@ -30,21 +31,33 @@ const allApps = liveApps;
     </div>
   </section>
 
-  <!-- 全部工具：每款一张大卡，展示界面预览与教程 / 下载入口 -->
-  {allApps.length > 0 && (
-    <section class="section featured-wrap" id="apps">
+  <!-- 本期推荐：只放一张大卡 -->
+  {spotlight && (
+    <section class="section featured-wrap" id="spotlight">
       <div class="container">
         <div class="section-head">
-          <span class="eyebrow">TOOLBOX · 全部工具</span>
-          <h2 class="section-title">{allApps.length} 款趁手的小工具</h2>
-          <p class="section-sub">都离线运行，各解决一类高频问题。点进去有图文教程，几分钟就能上手。</p>
+          <span class="eyebrow">FEATURED · 本期推荐</span>
+          <h2 class="section-title">先看看这一款</h2>
+          <p class="section-sub">最近更新的{spotlight.name}，界面预览、教程与下载都在这里。</p>
         </div>
-        <div style="display:grid; gap:22px;">
-          {allApps.map((app) => <FeaturedCard app={app} />)}
-        </div>
+        <FeaturedCard app={spotlight} />
       </div>
     </section>
   )}
+
+  <!-- 全部工具：并列小卡索引 -->
+  <section class="section" id="apps">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">TOOLBOX · 全部工具</span>
+        <h2 class="section-title">一点就够用</h2>
+        <p class="section-sub">持续打磨中，更多小工具陆续上架。</p>
+      </div>
+      <div class="app-grid">
+        {apps.map((app) => <AppCard app={app} />)}
+      </div>
+    </div>
+  </section>
 
   <!-- 关于 -->
   <section class="section featured-wrap" id="about">
