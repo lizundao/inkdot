@@ -53,7 +53,7 @@ const FIN_RELEASE = "https://github.com/lizundao/finance-toolbox/releases/downlo
 const BAT_RELEASE = "https://github.com/lizundao/batch-rename/releases/download/v0.1.0/";
 const CM_RELEASE = "https://github.com/lizundao/clear-meta/releases/download/v0.1.0/";
 const SEAL_RELEASE = "https://github.com/lizundao/seal-extractor/releases/download/v1.1.0/";
-const TIXINGMAO_RELEASE = "https://github.com/lizundao/tixingmao/releases/download/v1.0.0/";
+const TIXINGMAO_RELEASE = "https://github.com/lizundao/tixingmao/releases/download/v1.0.1/";
 
 export const apps: App[] = [
   {
@@ -556,7 +556,7 @@ export const apps: App[] = [
     summary: "安静待在托盘，到点让一只会动的小猫来提醒你，还能自动跳过节假日。",
     description:
       "离线桌面提醒工具，平时驻留系统托盘，到点从屏幕指定位置弹出一只会动的小猫和提醒文字。支持一次性、每天、间隔三种提醒，可自动跳过周末与国家法定节假日并正确处理调休，所有数据保存在本机。",
-    version: "1.0.0",
+    version: "1.0.1",
     updated: "2026-11-12",
     icon: "/assets/img/tixingmao-icon.png",
     cover: "/assets/img/tixingmao-cover.png",
@@ -568,10 +568,10 @@ export const apps: App[] = [
     platforms: ["Windows", "macOS"],
     repo: "https://github.com/lizundao/tixingmao",
     downloads: [
-      { label: "Windows 便携版", os: "Windows", note: "解压即用 · 单文件 exe", url: TIXINGMAO_RELEASE + "Tixingmao-1.0.0-portable-win-x64.zip" },
-      { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 当前用户目录", url: TIXINGMAO_RELEASE + "Tixingmao-1.0.0-setup-win-x64.exe" },
-      { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · aarch64", url: TIXINGMAO_RELEASE + "Tixingmao-1.0.0-aarch64.dmg" },
-      { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: TIXINGMAO_RELEASE + "Tixingmao-1.0.0-aarch64.app.zip" },
+      { label: "Windows 便携版", os: "Windows", note: "解压即用 · 单文件 exe", url: TIXINGMAO_RELEASE + "Tixingmao-1.0.1-portable-win-x64.zip" },
+      { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 当前用户目录", url: TIXINGMAO_RELEASE + "Tixingmao-1.0.1-setup-win-x64.exe" },
+      { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · aarch64", url: TIXINGMAO_RELEASE + "Tixingmao-1.0.1-aarch64.dmg" },
+      { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: TIXINGMAO_RELEASE + "Tixingmao-1.0.1-aarch64.app.zip" },
       { label: "百度网盘（备用）", os: "网盘", note: "免输码直达 · 永久有效", url: "https://pan.baidu.com/s/1n4vqkHtzzEwqc3SaIOVHpg?pwd=ljia", code: "ljia", external: true },
     ],
     features: [
