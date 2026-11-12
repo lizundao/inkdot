@@ -485,7 +485,7 @@ export const apps: App[] = [
       { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 当前用户目录", url: SEAL_RELEASE + "SealExtractor-1.1.0-setup-win-x64.exe" },
       { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · aarch64", url: SEAL_RELEASE + "SealExtractor-1.1.0-aarch64.dmg" },
       { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: SEAL_RELEASE + "SealExtractor-1.1.0-aarch64.app.zip" },
-      { label: "百度网盘（备用）", os: "网盘", note: "免输码直达 · 永久有效", url: "__SEAL_PAN_URL__", code: "__SEAL_PAN_CODE__", external: true },
+      { label: "百度网盘（备用）", os: "网盘", note: "免输码直达 · 永久有效", url: "https://pan.baidu.com/s/1pn_8DDL3t7WsG2_SWYZVqw?pwd=168g", code: "168g", external: true },
     ],
     features: [
       { k: "完全离线", v: "内嵌 OpenCV.js 引擎，识别全程在本机内存完成，不上传、无网络请求" },
