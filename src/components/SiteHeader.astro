@@ -1,20 +1,14 @@
 ---
-/** 全站页头。改这里 → 所有页面导航同步更新。 */
+/** 全站页头。改这里 → 所有页面导航同步更新。
+ *  导航只保留「首页 / 工具」两项：全部工具已在首页 #apps 聚合区列出，
+ *  不必在导航栏逐个罗列（避免工具变多后导航换行拥挤）。 */
 import { site } from '../data/site';
 import Icon from './Icon.astro';
 
-interface Props { active?: 'home' | 'pdf' | 'image' | 'finance' | 'batch' | 'meta' | 'seal' | 'tixingmao' | 'privacy' | 'disclaimer'; }
-const { active } = Astro.props;
-
+const pathname = Astro.url.pathname;
 const links = [
-  { key: 'home', href: '/', label: '首页' },
-  { key: 'pdf', href: '/apps/pdf-toolbox/', label: 'PDF 工具箱' },
-  { key: 'image', href: '/apps/image-processor/', label: '图片处理器' },
-  { key: 'finance', href: '/apps/finance-toolbox/', label: '财务工具箱' },
-  { key: 'batch', href: '/apps/batch-rename/', label: '批量重命名' },
-  { key: 'meta', href: '/apps/clear-meta/', label: '元数据管理' },
-  { key: 'seal', href: '/apps/seal-extractor/', label: '印章提取' },
-  { key: 'tixingmao', href: '/apps/tixingmao/', label: '提醒猫' },
+  { key: 'home', href: '/', label: '首页', active: pathname === '/' },
+  { key: 'tools', href: '/#apps', label: '工具', active: pathname.startsWith('/apps') },
 ];
 ---
 <header class="site-header">
