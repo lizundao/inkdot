@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Crumbs from '../../../components/Crumbs.astro';
+import Icon from '../../../components/Icon.astro';
+import GuideBody from '../../../components/GuideBody.astro';
+import Donate from '../../../components/Donate.astro';
+import { getApp } from '../../../data/apps';
+
+const app = getApp('rili')!;
+---
+<BaseLayout title={`${app.name} · 图文教程`} description={`${app.name} 使用教程：从下载安装到摆好第一张桌面日历，看农历节气、法定假日与调休，并支持假期倒计时。`} active="rili" ogImage={app.guide.screenshot}>
+  <section class="section-sm">
+    <div class="container">
+      <div style="margin-bottom:26px;">
+        <Crumbs items={[{ label: app.name, href: app.url }, { label: '图文教程' }]} />
+      </div>
+
+      <div class="guide-head">
+        <span class="guide-kicker"><Icon name="leaf" /> 图文教程</span>
+        <h1 class="guide-title">{app.name} · 快速上手</h1>
+        <p class="guide-sub">照着做，几分钟摆好第一张桌面日历，看农历节气、法定假日与调休，还能倒计时下一个假期。全程离线，数据不出本机。</p>
+        <div class="guide-meta">
+          <span>适用版本 v{app.version}</span>
+          <span>·</span>
+          <span>约 3 分钟读完</span>
+          <span>·</span>
+          <a href={app.url}>回到工具详情 <Icon name="arrow" /></a>
+        </div>
+      </div>
+
+      <GuideBody app={app} />
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container" style="max-width:760px;">
+      <Donate />
+    </div>
+  </section>
+</BaseLayout>
