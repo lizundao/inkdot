@@ -659,6 +659,7 @@ export const apps: App[] = [
       { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 当前用户目录", url: RILI_RELEASE + "rili-1.0.0-setup-win-x64.exe" },
       { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · aarch64", url: RILI_RELEASE + "rili-1.0.0-aarch64.dmg" },
       { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: RILI_RELEASE + "rili-1.0.0-aarch64.app.zip" },
+      { label: "百度网盘（备用）", os: "网盘", note: "免输码直达 · 永久有效", url: "https://pan.baidu.com/s/1WsaxPe9E6kHvsvtYgDR0UA?pwd=aqye", code: "aqye", external: true },
     ],
     features: [
       { k: "完全本地", v: "日历、农历与所有设置都保存在本机，无账号、无云同步、不联网" },
