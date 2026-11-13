@@ -8,7 +8,7 @@ import { site } from '../data/site';
 import { liveApps, apps } from '../data/apps';
 
 // 推荐位：显式指定最新上架的一款，避免同日更新时依赖排序细节。
-const SPOTLIGHT_ID = 'tixingmao';
+const SPOTLIGHT_ID = 'rili';
 const spotlight = liveApps.find((a) => a.id === SPOTLIGHT_ID)
   ?? [...liveApps].reverse().sort((a, b) => b.updated.localeCompare(a.updated))[0];
 ---
