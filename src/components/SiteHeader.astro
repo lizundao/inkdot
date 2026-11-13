@@ -19,7 +19,7 @@ const links = [
     </a>
     <nav class="nav-links" aria-label="主导航">
       {links.map((l) => (
-        <a href={l.href} class:list={['nav-link', { active: active === l.key }]}>{l.label}</a>
+        <a href={l.href} class:list={['nav-link', { active: l.active }]}>{l.label}</a>
       ))}
       <button id="theme-toggle" class="icon-btn" type="button" aria-label="切换深浅主题" title="切换深浅主题">
         <Icon name="moon" class="icon-moon" />
