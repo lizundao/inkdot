@@ -16,9 +16,10 @@ const g = app.guide;
       <li><a href="#naming">{g.namingTitle || '输出命名'}</a></li>
       <li><a href="#notes">注意事项</a></li>
     </ul>
-    <a class="btn btn-primary btn-sm btn-block" href={app.url} style="margin-top:20px;">
-      <Icon name="download" /> 去下载
+    <a class="btn btn-primary btn-sm btn-block side-download" href={`${app.url}#download`}>
+      <Icon name="download" /> 立即下载
     </a>
+    <p class="side-download-hint">Windows / macOS · 免费</p>
   </aside>
 
   <div class="prose">

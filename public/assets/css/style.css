@@ -402,8 +402,8 @@ button { font-family: inherit; cursor: pointer; }
 .dl-label { display: block; font-size: 15px; font-weight: 700; color: var(--ink-900); }
 .dl-note { display: block; font-size: 12.5px; color: var(--ink-400); margin-top: 3px; }
 .dl-code { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; margin-top: 8px; padding: 3px 9px; border: 1px dashed var(--seal); border-radius: 7px; background: var(--seal-soft); font-size: 12px; color: var(--ink-500); cursor: pointer; user-select: none; transition: background .2s; }
-.dl-code:hover { background: var(--seal); color: var(--paper-1); }
-.dl-code:hover b, .dl-code:hover .dl-copy { color: var(--paper-1); }
+.dl-code:hover { background: var(--seal); color: #fff; }
+.dl-code:hover b, .dl-code:hover .dl-copy { color: #fff; }
 .dl-code b { font-family: var(--font-brand); font-size: 13px; letter-spacing: 1px; color: var(--seal); }
 .dl-copy { font-size: 11px; color: var(--ink-400); border-left: 1px solid currentColor; padding-left: 6px; }
 .dl-arrow { margin-left: auto; color: var(--seal); flex: none; }
@@ -416,9 +416,9 @@ button { font-family: inherit; cursor: pointer; }
 .side-nav { position: sticky; top: 90px; }
 .side-nav-title { font-family: var(--font-brand); font-weight: 700; font-size: 18px; color: var(--ink-900); margin: 0 0 12px; }
 .side-nav ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
-.side-nav a { display: block; font-size: 14.5px; color: var(--ink-500); padding: 9px 13px; border-radius: 9px; border-left: 2px solid transparent; transition: all .2s; }
-.side-nav a:hover { color: var(--seal); background: var(--paper-3); }
-.side-nav a.active { color: var(--seal); background: var(--seal-soft); border-left-color: var(--seal); font-weight: 600; }
+.side-nav ul a { display: block; font-size: 14.5px; color: var(--ink-500); padding: 9px 13px; border-radius: 9px; border-left: 2px solid transparent; transition: all .2s; }
+.side-nav ul a:hover { color: var(--seal); background: var(--paper-3); }
+.side-nav ul a.active { color: var(--seal); background: var(--seal-soft); border-left-color: var(--seal); font-weight: 600; }
 .prose h2 { font-family: var(--font-brand); font-size: 25px; color: var(--ink-900); margin: 0 0 18px; }
 .prose h3 { font-family: var(--font-brand); font-size: 20px; color: var(--ink-900); margin: 34px 0 14px; padding-left: 12px; border-left: 3px solid var(--seal); }
 .prose p { font-size: 15.5px; color: var(--ink-500); line-height: 1.85; margin: 0 0 16px; }
@@ -609,3 +609,115 @@ button { font-family: inherit; cursor: pointer; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
 }
+
+/* ==================================================================
+   视觉重构 v2 · 2026-11-13（覆盖层，删掉本段即可整体回滚到 v1）
+   ------------------------------------------------------------------
+   方向：中性暖白替代偏黄宣纸 · 墨黑作为主操作色 · 朱砂收敛为小面积点缀
+        提高正文对比度 · 圆角/阴影更利落 · 字级与留白节奏统一
+   ================================================================== */
+:root {
+  --paper:      #faf9f6;
+  --paper-2:    #ffffff;
+  --paper-3:    #f2f0ea;
+  --ink-900:    #1b1916;
+  --ink-700:    #3a362f;
+  --ink-500:    #5b554a;
+  --ink-400:    #7d766a;
+  --ink-300:    #a6a092;
+  --line:       #e7e3d9;
+  --line-2:     #d8d2c4;
+  --seal:       #b44436;
+  --seal-dark:  #92352a;
+  --seal-soft:  #fbece8;
+  --jade:       #4f776a;
+  --jade-soft:  #eaf1ec;
+
+  --radius:    12px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 1px 2px rgba(28,26,23,.04), 0 2px 10px rgba(28,26,23,.035);
+  --shadow-md: 0 4px 12px rgba(28,26,23,.06), 0 12px 30px rgba(28,26,23,.05);
+  --shadow-lg: 0 10px 26px rgba(28,26,23,.09), 0 26px 56px rgba(28,26,23,.07);
+
+  /* 主操作按钮：墨黑，朱砂只做点缀 */
+  --btn-bg:       #221f1b;
+  --btn-fg:       #ffffff;
+  --btn-bg-hover: #3b352d;
+}
+[data-theme="dark"] {
+  --paper:      #141311;
+  --paper-2:    #1c1a17;
+  --paper-3:    #26231e;
+  --ink-900:    #f3eee2;
+  --ink-700:    #d6cfbf;
+  --ink-500:    #ada592;
+  --ink-400:    #8b8372;
+  --ink-300:    #6d6557;
+  --line:       #322e27;
+  --line-2:     #464034;
+  --seal:       #dd6a58;
+  --seal-dark:  #ee8575;
+  --seal-soft:  #38221f;
+  --jade:       #8fae9b;
+  --jade-soft:  #233029;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.28);
+  --shadow-md: 0 6px 18px rgba(0,0,0,.34);
+  --shadow-lg: 0 14px 40px rgba(0,0,0,.44);
+  --btn-bg:       #c9503f;
+  --btn-fg:       #ffffff;
+  --btn-bg-hover: #df6452;
+}
+
+/* 排版节奏 */
+body { line-height: 1.75; }
+.section { padding: 78px 0; }
+.section-head { margin-bottom: 42px; }
+.hero { padding: 80px 0 72px; }
+.hero-title { font-size: clamp(56px, 9vw, 88px); letter-spacing: -.02em; }
+.hero::before, .hero::after { opacity: .32; }
+.section-title, .guide-title, .detail-title, .legal-title { letter-spacing: -.01em; }
+.eyebrow { letter-spacing: .12em; }
+.prose p, .prose li, .step-body, .note-list li { color: var(--ink-700); }
+.section-sub, .guide-sub, .detail-desc, .about-text { color: var(--ink-500); }
+.app-card { padding: 26px; }
+.app-card:hover, .featured:hover { transform: translateY(-3px); }
+.step-card { padding: 24px; }
+.shot-frame { border-radius: var(--radius-lg); }
+
+/* 导航/品牌 */
+.nav { height: 68px; }
+.brand-mark { border-radius: 10px; }
+.nav-link { font-weight: 600; letter-spacing: .01em; }
+.nav-link.active { position: relative; }
+.nav-link.active::after {
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: 2px;
+  height: 2px; border-radius: 2px; background: var(--seal);
+}
+
+/* 按钮：墨黑主操作，明确的 hover / focus，红色退为点缀 */
+.btn { border-radius: 10px; letter-spacing: .01em; }
+.btn-primary {
+  background: var(--btn-bg); color: var(--btn-fg);
+  box-shadow: 0 4px 12px rgba(28,26,23,.16);
+}
+.btn-primary:hover {
+  background: var(--btn-bg-hover); color: var(--btn-fg);
+  box-shadow: 0 8px 22px rgba(28,26,23,.22);
+}
+.btn-primary:focus-visible { outline-color: var(--seal); }
+.btn svg { color: currentColor; }
+.side-download { margin-top: 22px; }
+.side-download-hint {
+  margin: 10px 0 0; text-align: center;
+  font-size: 12px; color: var(--ink-400); letter-spacing: .02em;
+}
+/* 侧栏目录与按钮之间加一条呼吸线 */
+.side-nav ul { padding-bottom: 18px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+
+/* 步骤序号、印章等：保留朱砂点缀，但降低红色密度 */
+.step-num { box-shadow: 0 3px 10px rgba(28,26,23,.14); }
+.featured-badge { box-shadow: 0 3px 10px rgba(28,26,23,.15); }
+.guide-kicker { letter-spacing: .02em; }
+
+/* 纸纹减弱，避免旧纸的浑浊感 */
+body::before { opacity: .018; }
