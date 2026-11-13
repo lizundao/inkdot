@@ -11,6 +11,14 @@ import { liveApps, apps } from '../data/apps';
 const SPOTLIGHT_ID = 'rili';
 const spotlight = liveApps.find((a) => a.id === SPOTLIGHT_ID)
   ?? [...liveApps].reverse().sort((a, b) => b.updated.localeCompare(a.updated))[0];
+
+// 首页「最近改了什么」：每款工具只取最新一条，避免同一款连续占位
+const seen = new Set<string>();
+const latestChanges = apps
+  .flatMap((a) => (a.changelog ?? []).map((c) => ({ app: a, ...c })))
+  .sort((x, y) => (x.date === y.date ? 0 : y.date.localeCompare(x.date)))
+  .filter((c) => (seen.has(c.app.id) ? false : (seen.add(c.app.id), true)))
+  .slice(0, 3);
 ---
 <BaseLayout title={site.slogan} active="home" ogImage={spotlight ? spotlight.cover : "/assets/img/pdf-toolbox-cover.png"}>
   <!-- Hero -->
@@ -60,6 +68,36 @@ const spotlight = liveApps.find((a) => a.id === SPOTLIGHT_ID)
       </div>
     </div>
   </section>
+
+  <!-- 最近更新 -->
+  {latestChanges.length > 0 && (
+    <section class="section-sm" id="updates">
+      <div class="container">
+        <div class="update-head">
+          <div>
+            <span class="eyebrow">CHANGELOG · 更新记录</span>
+            <h2 class="section-title" style="font-size:clamp(24px,3.4vw,30px);">最近改了什么</h2>
+          </div>
+          <a class="btn btn-ghost btn-sm" href="/changelog/">全部更新记录 <Icon name="arrow" /></a>
+        </div>
+        <ul class="update-list">
+          {latestChanges.map((c) => (
+            <li>
+              <a class="update-row" href="/changelog/">
+                <span class="update-date">{c.date}</span>
+                <span class="update-who">
+                  <img src={c.app.icon} alt="" width="26" height="26" loading="lazy" />
+                  <span class="update-app">{c.app.name}</span>
+                  <span class="update-ver">v{c.version}</span>
+                </span>
+                <span class="update-text">{c.items[0]}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
 
   <!-- 关于 -->
   <section class="section featured-wrap" id="about">

@@ -1,0 +1,110 @@
+---
+/** 更新记录：把各工具 apps.ts 里 changelog 字段聚合为一条时间线。
+ *  新增发版 → 在对应工具的 changelog 数组最前面加一条即可，本页自动更新。 */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Crumbs from '../components/Crumbs.astro';
+import { apps } from '../data/apps';
+
+type Row = {
+  appId: string;
+  appName: string;
+  icon: string;
+  url: string;
+  version: string;
+  date: string;
+  kind?: string;
+  items: string[];
+};
+
+const rows: Row[] = apps
+  .flatMap((app) =>
+    (app.changelog ?? []).map((c) => ({
+      appId: app.id,
+      appName: app.name,
+      icon: app.icon,
+      url: app.url,
+      version: c.version,
+      date: c.date,
+      kind: c.kind,
+      items: c.items,
+    })),
+  )
+  // 日期倒序；同一天内按应用在 apps.ts 中的顺序
+  .sort((a, b) => (a.date === b.date ? 0 : b.date.localeCompare(a.date)));
+
+const appCount = new Set(rows.map((r) => r.appId)).size;
+const latest = rows[0]?.date ?? '';
+const years = [...new Set(rows.map((r) => r.date.slice(0, 4)))].sort().reverse();
+---
+<BaseLayout
+  title="更新记录"
+  description="墨点 inkdot 全部桌面工具的版本更新记录：哪一版新增了什么、修掉了什么问题，按时间倒序一目了然。"
+  ogImage="/assets/img/inkdot.png"
+>
+  <section class="section-sm">
+    <div class="container">
+      <div style="margin-bottom:26px;">
+        <Crumbs items={[{ label: '更新记录' }]} />
+      </div>
+
+      <div class="guide-head">
+        <span class="guide-kicker">更新记录</span>
+        <h1 class="guide-title">每一版，改了什么</h1>
+        <p class="guide-sub">
+          只记录真正发生的变化：新增了什么、修掉了什么问题、行为怎么调整。发一版写一版，不追述旧账。
+        </p>
+        <div class="guide-meta">
+          <span>{rows.length} 个版本</span>
+          <span>·</span>
+          <span>覆盖 {appCount} 款工具</span>
+          {latest && (<><span>·</span><span>最近更新 {latest}</span></>)}
+        </div>
+      </div>
+
+      {rows.length === 0 ? (
+        <div class="prose-card">
+          <p style="margin:0;">还没有记录。发版后在各工具的 changelog 里补一条，这里就会出现。</p>
+        </div>
+      ) : (
+        <ol class="log-list">
+          {rows.map((r) => (
+            <li class="log-item">
+              <div class="log-date">
+                <span class="log-day">{r.date}</span>
+              </div>
+              <div class="log-rail" aria-hidden="true"><span class="log-dot"></span></div>
+              <div class="log-card">
+                <div class="log-head">
+                  <a class="log-app" href={r.url}>
+                    <img src={r.icon} alt="" width="34" height="34" loading="lazy" />
+                    <span>{r.appName}</span>
+                  </a>
+                  <span class="log-ver">v{r.version}</span>
+                  {r.kind && <span class="log-kind">{r.kind}</span>}
+                  <a class="log-link" href={`${r.url}`}>查看详情<span aria-hidden="true">→</span></a>
+                </div>
+                <ul class="log-items">
+                  {r.items.map((it) => <li>{it}</li>)}
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ol>
+      )}
+
+      <div class="notice" style="margin-top:36px;">
+        <span>
+          想第一时间知道新版？各工具的
+          <a href="/#apps">详情页</a>
+          会显示当前版本与更新日期；源码与完整提交历史在
+          <a href="https://github.com/lizundao" target="_blank" rel="noopener">GitHub</a>
+          上公开可查。
+        </span>
+      </div>
+
+      {years.length > 0 && (
+        <p class="log-foot">收录年份：{years.join(' / ')}　·　本页随发版自动更新</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>

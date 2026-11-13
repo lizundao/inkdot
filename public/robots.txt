@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /404.html
 
-Sitemap: https://inkdot.cn/sitemap.xml
+# Astro 的 sitemap 插件输出的是索引文件 + 分片，此处指向索引
+Sitemap: https://inkdot.cn/sitemap-index.xml

@@ -15,3 +15,7 @@ old/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# 本地预览截图与部署包
+.preview/
+inkdot-dist-*.zip

@@ -12,6 +12,8 @@ export type KV = { k: string; v: string };
 export type Download = { label: string; os: "Windows" | "macOS" | "网盘"; note: string; url: string; code?: string; external?: boolean };
 export type Faq = { q: string; a: string };
 export type GuideStep = { n: number; title: string; body: string; tip?: string; shot?: string; shotAlt?: string };
+/** 版本记录：只写真实发版说明，没有记录的发版不要凭空补。 */
+export type ChangeEntry = { version: string; date: string; kind?: string; items: string[] };
 
 export type App = {
   id: string;
@@ -35,6 +37,7 @@ export type App = {
   modules: KV[];
   requirements: KV[];
   faq: Faq[];
+  changelog?: ChangeEntry[];
   // 图文教程
   guide: {
     screenshot: string;
@@ -51,7 +54,7 @@ const PDF_RELEASE = "https://github.com/lizundao/pdf-toolbox/releases/download/v
 const IMG_RELEASE = "https://github.com/lizundao/image-processor/releases/download/v1.0.0/";
 const FIN_RELEASE = "https://github.com/lizundao/finance-toolbox/releases/download/v0.1.0/";
 const BAT_RELEASE = "https://github.com/lizundao/batch-rename/releases/download/v0.1.0/";
-const CM_RELEASE = "https://github.com/lizundao/clear-meta/releases/download/v0.1.0/";
+const CM_RELEASE = "https://github.com/lizundao/clear-meta/releases/download/v0.1.1/";
 const SEAL_RELEASE = "https://github.com/lizundao/seal-extractor/releases/download/v1.1.0/";
 const TIXINGMAO_RELEASE = "https://github.com/lizundao/tixingmao/releases/download/v1.0.1/";
 const RILI_RELEASE = "https://github.com/lizundao/rili/releases/download/v1.0.1/";
@@ -116,6 +119,18 @@ export const apps: App[] = [
       { q: "中文水印显示方块或乱码？", a: "在「水印版式 → 字体」选择微软雅黑、宋体等中文字体，不要留空。" },
       { q: "脱敏涂黑后还能复制出文字吗？", a: "涂黑层覆盖在内容上方，一般阅读看不到，但底层文字理论上仍可能被专业工具提取。高敏感场景建议配合「清除元数据」，或打印后再扫描。" },
       { q: "是否收费？有无联网上传？", a: "当前版本依据 MIT 许可自由使用。文件本地处理，无账号、无云上传（Office 转换调用本机 Office）。" },
+    ],
+    changelog: [
+      {
+        version: "1.0.0",
+        date: "2026-06-11",
+        kind: "首次发布",
+        items: [
+          "八大模块一次上齐：压缩、扫描增强、页面工具、格式转换、水印版式、安全隐私、脱敏涂黑、预览信息。",
+          "AES-256 加密 / 解密与清除元数据；脱敏涂黑为视觉遮盖，底层文字仍可能被提取，页面已注明。",
+          "Windows 便携版 / 安装包与 macOS Apple 芯片版（dmg + app.zip）同步提供。",
+        ],
+      },
     ],
     guide: {
       screenshot: "/assets/img/pdf-toolbox-guide.png",
@@ -192,6 +207,18 @@ export const apps: App[] = [
       { q: "一键美化效果不理想？", a: "一键美化是自动参数调整，效果因图而异。可再用「亮度调整」手动微调对比度与亮度。" },
       { q: "批量处理中途有个别图片失败？", a: "已成功处理的文件会保留，失败项会在结果里汇总说明原因，可单独调整后重试。" },
       { q: "是否收费？会不会上传我的图片？", a: "当前版本依据 MIT 许可自由使用。图片全程本地处理，无账号、无云上传。" },
+    ],
+    changelog: [
+      {
+        version: "1.0.0",
+        date: "2026-11-11",
+        kind: "首次发布",
+        items: [
+          "批量压缩、格式转换、等比缩放、旋转翻转，统一参数批量输出。",
+          "裁剪（比例 / 像素 / 框选）、调色（亮度 / 一键美化）、装饰（水印 / 边框 / 圆角）。",
+          "水平与垂直合并、GIF 合成、宫格切图；支持 {name} / {timestamp} / {index} 命名变量。",
+        ],
+      },
     ],
     guide: {
       screenshot: "/assets/img/image-processor-guide.png",
@@ -271,6 +298,18 @@ export const apps: App[] = [
       { q: "2028 年的日期计算准确吗？", a: "本地节假日数据收录到 2027 年。选择 2028 年及以后，界面会提示「未收录年份」，工作日按周一至周五估算，仅供参考；正式放假安排发布后需更新数据文件。" },
       { q: "工资个税结果和工资条不一样？", a: "工具按累计预扣法估算，需填累计收入、累计免税收入与各项扣除。实际应纳税额以单位申报与税务机关口径为准。" },
       { q: "是否收费？会不会上传我的数据？", a: "当前版本依据 MIT 许可自由使用。所有计算在本机完成，无账号、无云上传，设置只存在本机。" },
+    ],
+    changelog: [
+      {
+        version: "0.1.0",
+        date: "2026-11-12",
+        kind: "首次发布",
+        items: [
+          "人民币大写与反查、支票日期大写、金额格式化。",
+          "价税分离、利息计算、日期差与账期、公历农历与法定节假日。",
+          "等额本息 / 等额本金还款计划、直线折旧、比例分摊、工资个税（累计预扣法）。",
+        ],
+      },
     ],
     guide: {
       screenshot: "/assets/img/finance-toolbox-guide.png",
@@ -355,6 +394,18 @@ export const apps: App[] = [
       { q: "正则写得太复杂会卡住吗？", a: "预览在后台线程计算并带超时；带嵌套量词、反向引用或超大重复次数等高风险写法会被自动停用并给出提示，不会冻结界面。" },
       { q: "是否收费？会不会上传我的文件？", a: "当前版本依据 MIT 许可自由使用。文件与元数据全程在本机读取和改名，无账号、无云上传。" },
     ],
+    changelog: [
+      {
+        version: "0.1.0",
+        date: "2026-11-12",
+        kind: "首次发布",
+        items: [
+          "六种改名模式：查找替换、智能重命名、插入内容、自动编号、手动编辑、批量粘贴。",
+          "六种模式统一实时预览目标文件名；目标已存在、批次内重名或名称非法一律跳过，绝不覆盖。",
+          "两阶段临时名事务支持交换与链式改名，操作历史可整批撤销与重试。",
+        ],
+      },
+    ],
     guide: {
       screenshot: "/assets/img/batch-rename-guide.png",
       screenshotAlt: "批量重命名主界面，左侧为六种改名模式，中间为文件列表，底部为工具栏与操作历史",
@@ -384,8 +435,8 @@ export const apps: App[] = [
     summary: "PDF、Office、图片元数据，本地查看、清除与编辑，对外发文件前先去掉隐私痕迹。",
     description:
       "离线桌面元数据管理工具，支持查看、选择性清除与编辑 PDF、Office、图片文件中的元数据。内置投标脱敏、隐私清除预设，处理前后对比、批量处理与报告导出。所有处理在本机完成，数据不出本机。",
-    version: "0.1.0",
-    updated: "2026-11-12",
+    version: "0.1.1",
+    updated: "2026-11-13",
     icon: "/assets/img/clear-meta-icon.png",
     cover: "/assets/img/clear-meta-cover.png",
     tags: ["元数据", "隐私", "投标脱敏", "PDF", "Office", "图片"],
@@ -396,10 +447,10 @@ export const apps: App[] = [
     platforms: ["Windows", "macOS"],
     repo: "https://github.com/lizundao/clear-meta",
     downloads: [
-      { label: "Windows 便携版", os: "Windows", note: "解压即用 · 无需安装", url: CM_RELEASE + "ClearMeta-0.1.0-portable-win-x64.zip" },
-      { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 当前用户目录", url: CM_RELEASE + "ClearMeta-0.1.0-setup-win-x64.exe" },
-      { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · aarch64", url: CM_RELEASE + "ClearMeta-0.1.0-aarch64.dmg" },
-      { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: CM_RELEASE + "ClearMeta-0.1.0-aarch64.app.zip" },
+      { label: "Windows 便携版", os: "Windows", note: "解压即用 · 约 2.7 MB", url: CM_RELEASE + "ClearMeta-0.1.1-portable-win-x64.zip" },
+      { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 当前用户目录 · 约 3.8 MB", url: CM_RELEASE + "ClearMeta-0.1.1-setup-win-x64.exe" },
+      { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · aarch64 · 约 2.6 MB", url: CM_RELEASE + "ClearMeta-0.1.1-aarch64.dmg" },
+      { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: CM_RELEASE + "ClearMeta-0.1.1-aarch64.app.zip" },
       { label: "百度网盘（备用）", os: "网盘", note: "免输码直达 · 永久有效", url: "https://pan.baidu.com/s/1GimCN4mpBesgWLXNsg9FMw?pwd=9rp6", code: "9rp6", external: true },
     ],
     features: [
@@ -410,6 +461,8 @@ export const apps: App[] = [
       { k: "字段编辑", v: "把作者、标题、公司等改为指定内容，统一对外署名" },
       { k: "快速预设", v: "投标脱敏、隐私清除、全部清除，一键套用整组规则" },
       { k: "可回溯", v: "处理前后对比一目了然；覆盖原文件先自动备份，可整批撤销" },
+      { k: "覆盖不怕占用", v: "覆盖时遇到杀毒、索引服务的瞬时占用会自动重试；仍被占用则明确提示，且原文件保持完好" },
+      { k: "时间痕迹不留", v: "覆盖成功后还原原文件的创建 / 修改 / 访问时间，处理动作不会留在资源管理器的时间信息里" },
       { k: "批量与报告", v: "文件夹批量处理，导出 CSV / JSON 报告便于留档" },
     ],
     modules: [
@@ -418,7 +471,7 @@ export const apps: App[] = [
       { k: "图片", v: "EXIF、GPS 定位、拍摄设备、软件痕迹（jpg / png / webp）" },
       { k: "字段策略", v: "保留 / 清除 / 编辑三态，按分组全保留或全清除" },
       { k: "预设", v: "投标脱敏、隐私清除、全部清除，规则按字段匹配" },
-      { k: "输出方式", v: "另存到新目录，或覆盖原文件（自动备份、可撤销）" },
+      { k: "输出方式", v: "另存到新目录，或覆盖原文件（自动备份、保留原时间戳、可撤销）" },
       { k: "报告", v: "处理前后对比视图，导出 CSV / JSON 处理报告" },
     ],
     requirements: [
@@ -436,11 +489,35 @@ export const apps: App[] = [
       { q: "便携版如何卸载？", a: "直接删除解压文件夹即可，不会在系统中残留注册表项。" },
       { q: "文件会上传到服务器吗？", a: "不会。所有读取、清除与编辑都在本机完成，离线可用，无账号、无云上传。" },
       { q: "清除后还能恢复吗？", a: "选「覆盖原文件」时会先自动备份到应用数据目录，可在结果列表点「撤销」还原；更稳妥的做法是优先「另存到新目录」，原件完全不动。" },
+      { q: "覆盖时提示「文件正被其他程序占用」怎么办？", a: "遇到杀毒软件、Windows 索引服务这类瞬时占用，软件会自动重试约 1 秒，多数情况无需你干预。仍然失败时说明文件确实被别的程序打开了：关掉正在使用它的程序（Word / Excel / 看图软件 / 同步盘），或稍等片刻再点一次「应用更改」。此时原文件没有被改动，也不会触发回滚，放心重试或改用「另存到新目录」。" },
+      { q: "为什么覆盖后文件的「修改时间」没变？", a: "这是有意设计的。覆盖原文件时会记录原文件的创建、修改、访问时间，处理完成后原样写回，资源管理器里看到的时间与处理前一致，不会因为清理动作暴露「这份文件今天被动过」。如果你需要留下处理时间，请改用「另存到新目录」。" },
       { q: "为什么拖入 Office 文件后界面自动切换模块？", a: "软件会按文件扩展名自动识别 PDF / Office / 图片并切到对应模块，避免用错规则。" },
       { q: "处理带宏或数字签名的 Office 文件会怎样？", a: "宏会原样保留；但 Office 文档的数字签名在重新打包后必然失效，这是 Office 签名机制决定的。如需保留签名，请勿处理该文件。" },
       { q: "单次能处理多少文件？", a: "单次最多 500 个；目录批量扫描深度上限 8 层、条数上限 5000，超出会提示分批。" },
       { q: "支持旧版 .doc / .xls 或 TIFF / HEIC 吗？", a: "暂不支持。Office 仅支持 OOXML 格式（docx / xlsx / pptx / docm / xlsm / pptm），图片支持 jpg / jpeg / png / webp。" },
       { q: "是否收费？", a: "采用 MIT 开源许可，当前版本依据许可自由使用，无广告。" },
+    ],
+    changelog: [
+      {
+        version: "0.1.1",
+        date: "2026-11-13",
+        kind: "稳定性 · 隐私",
+        items: [
+          "覆盖原文件不再轻易报「另一个程序正在使用此文件」：Windows 下遇杀毒 / 索引服务的瞬时占用会自动重试约 1 秒，仍被占用时给出明确指引，原文件保持完好。",
+          "覆盖成功后自动还原原文件的创建 / 修改 / 访问时间，处理动作不再留在资源管理器的时间信息里。",
+          "安装包与便携版文件名改为按版本号动态生成，避免发版时产物名错位。",
+        ],
+      },
+      {
+        version: "0.1.0",
+        date: "2026-11-12",
+        kind: "首次发布",
+        items: [
+          "本地查看、选择性清除与编辑 PDF / Office / 图片元数据。",
+          "内置投标脱敏、隐私清除、全部清除三种预设，支持处理前后逐字段对比。",
+          "文件夹批量处理，导出 CSV / JSON 报告留档。",
+        ],
+      },
     ],
     guide: {
       screenshot: "/assets/img/clear-meta-guide.png",
@@ -451,13 +528,15 @@ export const apps: App[] = [
         { n: 2, title: "认识界面", body: "左侧是功能模块（PDF、Office、图片）与关于、许可证入口；中间是当前模块的操作区：拖放区、快速预设、输出方式与文件列表；右侧是元数据编辑面板。拖入文件后会自动识别类型并切到对应模块。", tip: "左下角可切换深 / 浅主题；拖放区提示的「最多 500 个」是单次批量上限。", shot: "/assets/img/guide/cm-nav.png", shotAlt: "左侧功能模块导航：PDF、Office、图片，下方为关于与许可证入口" },
         { n: 3, title: "添加文件并预览元数据", body: "把文件拖到窗口中间的虚线拖放区，或点「选择文件 / 选择文件夹（批量）」。文件加入后，右侧会列出可读的全部元数据并按字段分组，处理前先看清有哪些信息。", shot: "/assets/img/guide/cm-dropzone.png", shotAlt: "中间操作区的虚线拖放区「点击选择或拖拽文件到窗口」，下方是选择文件夹（批量）与快速预设按钮" },
         { n: 4, title: "套用预设或逐字段设置", body: "赶时间就点「投标脱敏」「隐私清除」或「全部清除」快速预设，规则会按字段匹配；想精细控制就在右侧逐字段设为保留 / 清除 / 编辑，编辑项可把作者、标题、公司改成指定内容。未命中的字段保持原样。", tip: "投标场景优先用「投标脱敏」，可清除作者、最后修改者、应用程序、公司等易被关联的字段。", shot: "/assets/img/guide/cm-preset.png", shotAlt: "快速预设按钮：投标脱敏、隐私清除、全部清除，下方提示规则按字段匹配、未命中字段保持原样" },
-        { n: 5, title: "选输出方式并应用", body: "在「输出方式」选「另存到新目录」（推荐，原件完全不动）或「覆盖原文件（自动备份）」。选好输出目录后点「应用更改」，处理前后对比会显示每个字段的变化。", tip: "覆盖原文件会自动备份到应用数据目录，改错了可在结果里撤销；重要文件建议优先另存。", shot: "/assets/img/guide/cm-output.png", shotAlt: "输出方式单选：另存到新目录 / 覆盖原文件（自动备份），下方为输出目录、文件列表与应用更改按钮" },
+        { n: 5, title: "选输出方式并应用", body: "在「输出方式」选「另存到新目录」（推荐，原件完全不动）或「覆盖原文件（自动备份）」。选好输出目录后点「应用更改」，处理前后对比会显示每个字段的变化。覆盖模式会先备份原件，并在写回后把创建 / 修改 / 访问时间还原成处理前的样子。", tip: "覆盖时若遇到瞬时占用会自动重试；仍失败说明文件被别的程序打开着，关掉它再点一次即可，原文件不会被改坏。", shot: "/assets/img/guide/cm-output.png", shotAlt: "输出方式单选：另存到新目录 / 覆盖原文件（自动备份），下方为输出目录、文件列表与应用更改按钮" },
         { n: 6, title: "核对结果、撤销与导出报告", body: "处理后在右侧核对元数据编辑区的变化；需要留档就导出 CSV / JSON 报告。若覆盖了原文件且结果不满意，点结果里的「撤销」即可还原原件。", shot: "/assets/img/guide/cm-editor.png", shotAlt: "右侧元数据编辑面板，用于查看字段、选择保留或清除，并在处理后核对变更" },
       ],
       namingTitle: "输出与撤销",
-      naming: "选「另存到新目录」时，输出文件写到指定目录，不覆盖原件；选「覆盖原文件」时，写入前会先把原件备份到应用数据目录，可在结果里整批撤销。处理报告可导出为 CSV 或 JSON，保存在应用数据目录，便于留档核对。",
+      naming: "选「另存到新目录」时，输出文件写到指定目录，不覆盖原件；选「覆盖原文件」时，写入前会先把原件备份到应用数据目录，写入后还原原文件的创建 / 修改 / 访问时间，可在结果里整批撤销。处理报告可导出为 CSV 或 JSON，保存在应用数据目录，便于留档核对。",
       notes: [
         "单次最多 500 个文件，目录扫描深度 8 层、条数上限 5000；文件特别多时建议分批。",
+        "覆盖原文件遇到瞬时占用会自动重试约 1 秒；仍被占用时会提示关掉占用程序，此时原文件保持完好，重试即可。",
+        "覆盖成功后文件的创建 / 修改 / 访问时间会还原成处理前的时间，不会因清理动作在资源管理器里留下「今天被动过」的痕迹。",
         "Office 重新打包后数字签名必然失效（Office 机制决定），宏会原样保留；需保留签名请勿处理。",
         "暂不支持旧版 Office（doc / xls / ppt）及 TIFF / HEIC；高敏感场景如需彻底干净，建议清除元数据后再打印扫描。",
       ],
@@ -527,6 +606,19 @@ export const apps: App[] = [
       { q: "章上有黑色签字，能去掉吗？", a: "选「去黑字裁切」模式并开启补色修复，可保留合同底纹、清除黑色签字与印刷字；透明底 / 白底模式也会清掉章内黑杂点并统一章色。" },
       { q: "PDF 很多页会不会卡？", a: "单页过大时会自动降低渲染清晰度以避免内存溢出；单个 PDF 最多处理 120 页、单次累计 200 页，超出请拆分后再导入。" },
       { q: "是否收费？", a: "采用 MIT 开源许可，当前版本依据许可自由使用，无广告。" },
+    ],
+    changelog: [
+      {
+        version: "1.1.0",
+        date: "2026-11-12",
+        kind: "上架版本",
+        items: [
+          "HSV 双红区间 + 形态学闭运算 + 轮廓筛选，圆章、椭圆章、方章都能找出。",
+          "周边补色修复：用周边红色补回被黑色签字 / 印刷字盖住的笔画。",
+          "四种输出（透明底 / 白底 / 原图裁切 / 去黑字裁切），ZIP 批量导出并附印章清单 CSV。",
+          "多页 PDF 逐页渲染识别，清晰度 1.5×–3× 可调。",
+        ],
+      },
     ],
     guide: {
       screenshot: "/assets/img/seal-extractor-guide.png",
@@ -613,6 +705,25 @@ export const apps: App[] = [
       { q: "数据会上传吗？需要注册账号吗？", a: "不会、也不需要。所有提醒、位置与假期设置都保存在本机应用数据目录，无账号、无云同步、无网络请求。" },
       { q: "是否收费？", a: "采用 MIT 开源许可，当前版本依据许可自由使用，无广告。" },
     ],
+    changelog: [
+      {
+        version: "1.0.1",
+        date: "2026-11-12",
+        kind: "修复",
+        items: ["替换默认 Tauri 图标为提醒猫本猫图标（透明底、双描边），托盘与安装包保持一致。"],
+      },
+      {
+        version: "1.0.0",
+        date: "2026-11-12",
+        kind: "首次发布",
+        items: [
+          "三种提醒方式：一次性 / 每天 / 间隔，可做简易番茄钟。",
+          "到点弹出透明置顶的猫咪悬浮层，不抢键盘焦点，悬停暂停。",
+          "内置 2024–2027 法定节假日与调休数据，自动跳过节假日、识别调休上班日。",
+          "猫咪出现位置九宫格任选，托盘常驻、关窗不退出。",
+        ],
+      },
+    ],
     guide: {
       screenshot: "/assets/img/tixingmao-guide.png",
       screenshotAlt: "提醒猫主界面：左侧是「我的提醒」列表与今天的日期徽章，右侧是「新建提醒」表单",
@@ -697,6 +808,31 @@ export const apps: App[] = [
       { q: "农历和节气准吗？2028 年呢？", a: "农历与二十四节气基于开源历法库 tyme4ts 计算；法定假日内置 2026 / 2027 年安排，并正确识别调休上班日。2028 年及以后可在「设置 → 添加节日」按年份手动导入，不必等软件更新。" },
       { q: "数据会上传吗？需要注册账号吗？", a: "不会、也不需要。所有自定义节日、调休与个性化设置都保存在本机应用数据目录，无账号、无云同步、无网络请求。" },
       { q: "是否收费？", a: "采用 MIT 开源许可，当前版本依据许可自由使用，无广告。" },
+    ],
+    changelog: [
+      {
+        version: "1.0.1",
+        date: "2026-11-13",
+        kind: "新增 · 修复",
+        items: [
+          "横排布局右栏新增「今日黄历」：宜忌条目、吉神宜趋与凶煞宜忌、黄道吉时、农历日期与冲煞，按 tyme4ts 历法当场推算。",
+          "设置里新增「横排显示黄历」开关，默认开启，可一键关掉。",
+          "横排右栏重新排布，倒计时在上、黄历在下，不再是半屏空白。",
+          "日期格高度不再随窗口宽度变化，拖宽窗口不会让日历变高、内容溢出。",
+          "窗口高度改按字号换算，115% / 160% 字号下底部不再被裁。",
+          "配色换为「墨点 · 朱砂」：暖宣纸底 + 朱砂强调，深色模式改暖炭。",
+        ],
+      },
+      {
+        version: "1.0.0",
+        date: "2026-11-13",
+        kind: "首次发布",
+        items: [
+          "桌面常驻小日历：无边框、半透明、可置顶，关窗收进托盘。",
+          "公历 + 农历 + 二十四节气同屏，内置 2026 / 2027 法定假日与调休「休 / 班」徽章。",
+          "假期倒计时、自定义节日导入、字号缩放与竖排 / 横排切换。",
+        ],
+      },
     ],
     guide: {
       screenshot: "/assets/img/rili-guide.png",

@@ -9,7 +9,7 @@ import { getApp } from '../../../data/apps';
 
 const app = getApp('image-processor')!;
 ---
-<BaseLayout title={app.name} description={app.description} active="image" ogImage={app.cover}>
+<BaseLayout title={app.name} description={app.description} active="image" ogImage={app.cover} appId={app.id}>
   <section class="detail-head">
     <div class="container">
       <div style="margin-bottom:26px;">
@@ -23,6 +23,7 @@ const app = getApp('image-processor')!;
           <div class="detail-meta">
             <span>v{app.version}</span>
             <span>更新于 {app.updated}</span>
+            <a href="/changelog/" style="color:var(--seal);font-weight:600;">更新记录</a>
             <span>{app.platforms.join(' · ')}</span>
             <span>依据 MIT 许可开放</span>
           </div>

@@ -1,26 +1,81 @@
 ---
 /** 全站唯一骨架：页头、页脚、SEO、主题、全站交互集中于此。
  *  改页头/页脚 → 改 SiteHeader / SiteFooter 组件即可，所有页面同步。 */
+import fs from 'node:fs';
+import path from 'node:path';
 import { site } from '../data/site';
+import { getApp } from '../data/apps';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
 interface Props {
   title: string;
   description?: string;
-  active?: 'home' | 'pdf' | 'image' | 'finance' | 'batch' | 'meta' | 'seal' | 'tixingmao' | 'privacy' | 'disclaimer';
+  active?: 'home' | 'pdf' | 'image' | 'finance' | 'batch' | 'meta' | 'seal' | 'tixingmao' | 'rili' | 'privacy' | 'disclaimer';
   ogImage?: string;
+  /** 传工具 id 时输出 SoftwareApplication 结构化数据（详情页/教程页用） */
+  appId?: string;
 }
 const {
   title,
   description = site.description,
   active,
   ogImage = '/assets/img/pdf-toolbox-cover.png',
+  appId,
 } = Astro.props;
 
 const fullTitle = `${title} · ${site.name} ${site.en}`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImageUrl = new URL(ogImage, site.url).href;
+
+/** 读 PNG 的 IHDR 拿宽高，给 og:image 补尺寸（社交平台首图按比例裁切需要）。 */
+function pngSize(urlPath: string): { w: number; h: number } | null {
+  try {
+    const file = path.join(process.cwd(), 'public', urlPath.replace(/^\//, ''));
+    const fd = fs.openSync(file, 'r');
+    const buf = Buffer.alloc(26);
+    fs.readSync(fd, buf, 0, 26, 0);
+    fs.closeSync(fd);
+    if (buf.subarray(0, 8).toString('hex') !== '89504e470d0a1a0a') return null;
+    return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) };
+  } catch {
+    return null;
+  }
+}
+const ogSize = pngSize(ogImage);
+
+const app = appId ? getApp(appId) : undefined;
+
+/** 结构化数据：站点 + （可选）工具。搜索引擎据此识别这是软件下载页。 */
+const ld: unknown[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: `${site.name} ${site.en}`,
+    alternateName: site.en,
+    url: site.url,
+    description: site.description,
+    inLanguage: 'zh-CN',
+  },
+];
+if (app) {
+  ld.push({
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: app.name,
+    description: app.description,
+    url: new URL(app.url, site.url).href,
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: app.platforms.join(', '),
+    softwareVersion: app.version,
+    datePublished: app.updated,
+    image: new URL(app.icon, site.url).href,
+    inLanguage: 'zh-CN',
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'CNY', availability: 'https://schema.org/InStock' },
+    publisher: { '@type': 'Organization', name: `${site.name} ${site.en}`, url: site.url },
+  });
+}
 ---
 <!doctype html>
 <html lang="zh-CN">
@@ -31,11 +86,23 @@ const ogImageUrl = new URL(ogImage, site.url).href;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={`${site.name} ${site.en}`} />
+    <meta property="og:locale" content="zh_CN" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageUrl} />
-    <meta name="theme-color" content="#faf9f6" />
+    {ogSize && <meta property="og:image:width" content={String(ogSize.w)} />}
+    {ogSize && <meta property="og:image:height" content={String(ogSize.h)} />}
+    <meta property="og:image:alt" content={app ? `${app.name} 界面预览` : `${site.name} ${site.en}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="theme-color" content="#faf9f6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141311" media="(prefers-color-scheme: dark)" />
+    <meta name="format-detection" content="telephone=no" />
+    <script type="application/ld+json" set:html={JSON.stringify(ld.length === 1 ? ld[0] : ld)} />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
