@@ -54,7 +54,7 @@ const BAT_RELEASE = "https://github.com/lizundao/batch-rename/releases/download/
 const CM_RELEASE = "https://github.com/lizundao/clear-meta/releases/download/v0.1.0/";
 const SEAL_RELEASE = "https://github.com/lizundao/seal-extractor/releases/download/v1.1.0/";
 const TIXINGMAO_RELEASE = "https://github.com/lizundao/tixingmao/releases/download/v1.0.1/";
-const RILI_RELEASE = "https://github.com/lizundao/rili/releases/download/v1.0.0/";
+const RILI_RELEASE = "https://github.com/lizundao/rili/releases/download/v1.0.1/";
 
 export const apps: App[] = [
   {
@@ -639,15 +639,15 @@ export const apps: App[] = [
   {
     id: "rili",
     name: "小日历",
-    tagline: "桌面 Widget · 农历节气 · 法定假日",
-    summary: "常驻桌面一角的轻量日历，农历、节气、法定假日与调休一目了然，还能倒计时下一个假期。",
+    tagline: "桌面 Widget · 农历节气 · 今日黄历",
+    summary: "常驻桌面一角的轻量日历，农历、节气、法定假日与调休一目了然，横排还能看今日宜忌与吉时，顺带倒计时下一个假期。",
     description:
-      "墨点出品的桌面常驻小日历（Windows / macOS 原生，基于 Tauri 2）。无边框、半透明、可置顶，关窗即收进托盘；公历 + 农历 + 二十四节气同屏显示，内置 2026 / 2027 法定假日与调休并以「休 / 班」徽章标注，自动计算下一个法定假期倒计时。所有数据保存在本机，不联网。",
-    version: "1.0.0",
+      "墨点出品的桌面常驻小日历（Windows / macOS 原生，基于 Tauri 2）。无边框、半透明、可置顶，关窗即收进托盘；公历 + 农历 + 二十四节气同屏显示，内置 2026 / 2027 法定假日与调休并以「休 / 班」徽章标注。横排布局的侧栏是一页今日黄历：宜忌、吉神凶煞、黄道吉时、冲鸡煞西，按 tyme4ts 历法当场推算。所有数据保存在本机，不联网。",
+    version: "1.0.1",
     updated: "2026-11-13",
     icon: "/assets/img/rili-icon.png",
     cover: "/assets/img/rili-cover.png",
-    tags: ["日历", "桌面Widget", "农历", "节气", "法定假日", "调休", "假期倒计时", "托盘"],
+    tags: ["日历", "桌面Widget", "农历", "节气", "今日黄历", "宜忌", "法定假日", "调休", "假期倒计时", "托盘"],
     featured: true,
     status: "live",
     url: "/apps/rili/",
@@ -655,10 +655,10 @@ export const apps: App[] = [
     platforms: ["Windows", "macOS"],
     repo: "https://github.com/lizundao/rili",
     downloads: [
-      { label: "Windows 便携版", os: "Windows", note: "解压即用 · 单文件 exe", url: RILI_RELEASE + "rili-1.0.0-portable-win-x64.zip" },
-      { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 当前用户目录", url: RILI_RELEASE + "rili-1.0.0-setup-win-x64.exe" },
-      { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · aarch64", url: RILI_RELEASE + "rili-1.0.0-aarch64.dmg" },
-      { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: RILI_RELEASE + "rili-1.0.0-aarch64.app.zip" },
+      { label: "Windows 便携版", os: "Windows", note: "解压即用 · 单文件 exe", url: RILI_RELEASE + "rili-1.0.1-portable-win-x64.zip" },
+      { label: "Windows 安装包", os: "Windows", note: "NSIS 安装 · 当前用户目录", url: RILI_RELEASE + "rili-1.0.1-setup-win-x64.exe" },
+      { label: "macOS（Apple 芯片）", os: "macOS", note: "dmg 镜像 · aarch64", url: RILI_RELEASE + "rili-1.0.1-aarch64.dmg" },
+      { label: "macOS app（备选）", os: "macOS", note: "app 压缩包 · dmg 打不开时用", url: RILI_RELEASE + "rili-1.0.1-aarch64.app.zip" },
       { label: "百度网盘（备用）", os: "网盘", note: "免输码直达 · 永久有效", url: "https://pan.baidu.com/s/1WsaxPe9E6kHvsvtYgDR0UA?pwd=aqye", code: "aqye", external: true },
     ],
     features: [
@@ -669,6 +669,7 @@ export const apps: App[] = [
       { k: "中国历", v: "公历 + 农历 + 二十四节气同屏，基于开源历法库 tyme4ts" },
       { k: "法定假日与调休", v: "内置 2026 / 2027 国务院放假安排，日历上以「休 / 班」徽章标注并正确识别调休上班日" },
       { k: "假期倒计时", v: "自动计算今天距离下一个法定假期还有几天，一眼可见" },
+      { k: "今日黄历", v: "横排侧栏一页今日黄历：宜忌、吉神凶煞、黄道吉时、冲鸡煞西，当天现场推算" },
       { k: "自己加节日", v: "新一年放假安排公布后，可在设置里按年份导入自己的节日与调休" },
     ],
     modules: [
@@ -676,8 +677,9 @@ export const apps: App[] = [
       { k: "农历与节气", v: "每格显示农历日期，节气当天标注节气名称" },
       { k: "休 / 班徽章", v: "法定放假日标「休」，调休上班日标「班」，与国务院安排一致" },
       { k: "假期倒计时", v: "顶部或侧栏显示「距 XX 假期还有 N 天」" },
+      { k: "今日黄历", v: "宜 / 忌条目、吉神宜趋与凶煞宜忌、黄道吉时、农历与冲煞，横排时随侧栏常驻" },
       { k: "自定义节日", v: "按年份导入法定 / 自定义节日及调休，支持 2/5-2/13、1/31,2/14 等写法" },
-      { k: "个性化", v: "透明度、字号缩放、窗口置顶、开机自启、系统字体切换、竖排 / 横排布局" },
+      { k: "个性化", v: "透明度、字号缩放、窗口置顶、开机自启、系统字体切换、竖排 / 横排布局、黄历开关" },
     ],
     requirements: [
       { k: "操作系统", v: "Windows 10 / 11（64 位）；macOS Apple 芯片（aarch64）" },
@@ -698,20 +700,22 @@ export const apps: App[] = [
     ],
     guide: {
       screenshot: "/assets/img/rili-guide.png",
-      screenshotAlt: "小日历真实界面：深蓝半透明桌面 Widget，月历网格每格带农历日期、今日高亮，下方为假期倒计时列表（元旦、春节、清明节）",
-      lead: "小日历是「贴」在桌面一角的小日历：看日期、看农历节气、看法定假日与调休，还能倒计时下一个假期。下面从下载到摆好你的第一张日历，几分钟走通。",
+      screenshotAlt: "小日历真实界面：暖纸色半透明桌面 Widget，左侧月历网格每格带农历日期、今日为朱砂印章块，右侧为假期倒计时与今日黄历（宜忌、吉神、吉时、冲煞）",
+      lead: "小日历是「贴」在桌面一角的小日历：看日期、看农历节气、看法定假日与调休，横排还附一页今日黄历，顺带倒计时下一个假期。下面从下载到摆好你的第一张日历，几分钟走通。",
       steps: [
         { n: 1, title: "下载与启动", body: "下载 Windows 便携版 zip 并解压到任意目录，双击「rili.exe」启动；也可运行 NSIS 安装版。macOS 打开 dmg 把应用拖入「应用程序」，首次被 Gatekeeper 拦截的处理方式见详情页常见问题。", tip: "便携版不写注册表，删除文件夹即卸载；启动后窗口默认半透明、无边框，像一张便签贴在屏幕上。" },
-        { n: 2, title: "认识桌面日历", body: "窗口是一张整月网格：今天用蓝色描边高亮，每格下方显示农历日期，非本月的日期会淡化。窗口无边框、可拖动，关窗只是收进托盘，左键托盘图标即可重新显隐。", tip: "想让它一直看得见，可在设置里打开「窗口置顶」。" },
+        { n: 2, title: "认识桌面日历", body: "窗口是一张整月网格：今天是一枚朱砂色的印章块，每格下方显示农历日期，非本月的日期会淡化。窗口无边框、可拖动，关窗只是收进托盘，左键托盘图标即可重新显隐。", tip: "想让它一直看得见，可在设置里打开「窗口置顶」。" },
         { n: 3, title: "看农历、节气与法定假日", body: "每格显示农历日期，节气当天会标注节气名称（如「立春」「清明」）。法定放假日以「休」徽章标注，调休上班日以「班」徽章标注，与国务院办公厅安排一致。", tip: "2026 / 2027 年数据已内置，无需手动添加；更晚年份在「设置 → 添加节日」里补。" },
         { n: 4, title: "查看假期倒计时", body: "小日历会自动计算今天距离下一个法定假期还有几天，一眼可见，方便提前安排。下一个假期一过，会自动切换到再下一个。", tip: "倒计时跟随当前展示月份与内置假日数据实时更新。" },
-        { n: 5, title: "个性化摆位", body: "在设置里调节透明度（30%–100%）、字号缩放（80%–160%）、是否使用系统字体、竖排 / 横排布局，以及是否开机自启、是否窗口置顶，把日历调成你顺眼的样子。", tip: "透明度调低一点，可以让它安静地浮在壁纸和窗口之间，不抢视线。" },
-        { n: 6, title: "添加自己的节日与调休", body: "在「设置 → 添加节日」里按年份导入你关心的节日或单位调休，支持 2/5-2/13 这类区间与 1/31,2/14 这类逗号分隔写法，导入后会在月历上以徽章显示。", tip: "官方放假安排更新后，这里补一行就行，不必等软件发版。" },
+        { n: 5, title: "翻一页今日黄历", body: "切到横排布局，右侧除了假期倒计时，还有一页今日黄历：宜与忌的条目、吉神宜趋与凶煞宜忌、当天的黄道吉时，以及农历日期和「冲鸡煞西」。全部由本地历法库按当天干支现算，不联网、不查表。", tip: "不想要这一栏，在「设置 → 横排显示黄历」关掉即可，侧栏会回到只有倒计时的样子。" },
+        { n: 6, title: "个性化摆位", body: "在设置里调节透明度（30%–100%）、字号缩放（80%–160%）、是否使用系统字体、竖排 / 横排布局，以及是否开机自启、是否窗口置顶，把日历调成你顺眼的样子。", tip: "透明度调低一点，可以让它安静地浮在壁纸和窗口之间，不抢视线。" },
+        { n: 7, title: "添加自己的节日与调休", body: "在「设置 → 添加节日」里按年份导入你关心的节日或单位调休，支持 2/5-2/13 这类区间与 1/31,2/14 这类逗号分隔写法，导入后会在月历上以徽章显示。", tip: "官方放假安排更新后，这里补一行就行，不必等软件发版。" },
       ],
       namingTitle: "设置与数据",
       naming: "小日历不生成输出文件：所有自定义节日、调休日期与个性化设置都保存在系统应用数据目录（Windows 在 %APPDATA%\\com.inkdot.calendar，macOS 在 ~/Library/Application Support/com.inkdot.calendar），不上传网络。",
       notes: [
         "农历与二十四节气基于开源历法库 tyme4ts 计算；法定假日内置 2026 / 2027 年（含调休上班日），2028 年及以后请在「设置 → 添加节日」手动导入，不必等软件更新。",
+        "今日黄历的宜忌、吉神凶煞、吉时与冲煞按传统历法规则推算，属民俗文化参考，不构成任何生活或决策建议。",
         "关闭窗口只是收进托盘，仍在后台运行；要完全退出请右键托盘图标选「退出小日历」。",
         "便携版解压即用、不写注册表；个性化设置单独存在应用数据目录，搬运时记得单独备份。",
       ],
